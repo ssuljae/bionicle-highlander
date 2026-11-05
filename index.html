@@ -1,12 +1,7 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="description" content="바이오니클:하이랜더 — 마타 누이 섬에서 여섯 토아 중 하나를 골라 5분간 버티는 픽셀 생존 액션. 설치 없이 브라우저에서 바로 플레이.">
-<meta name="theme-color" content="#081211">
-<meta name="color-scheme" content="dark">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta charset="utf-8"><meta name="description" content="바이오니클:하이랜더 — 마타 누이 섬에서 여섯 토아 중 하나를 골라 5분간 버티는 픽셀 생존 액션. 설치 없이 브라우저에서 바로 플레이."><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <title>바이오니클:하이랜더</title>
 <style>
 :root{color-scheme:dark;--gold:#e4bb73;--ink:#101c1d;--muted:#8fa8a5;--line:#314443;--white:#eff5e9}*{box-sizing:border-box}body{margin:0;background:#081211;color:var(--white);font:15px/1.5 system-ui,-apple-system,"Malgun Gothic",sans-serif;overflow:hidden}button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}button:focus-visible{outline:2px solid var(--gold);outline-offset:4px}button:disabled{opacity:.4;cursor:default}canvas{position:fixed;inset:0;width:100%;height:100%;touch-action:none}button.primary{border:1px solid #e4bb73;background:var(--gold);color:#15211e;font-weight:800;padding:15px 28px;border-radius:5px;box-shadow:0 8px 36px #c29b4220}.ghost{background:#112320;border:1px solid var(--line);padding:9px 15px;border-radius:5px}.eyebrow{color:var(--gold);font-size:11px;letter-spacing:.2em;font-weight:700}.muted{color:var(--muted)}.overlay{position:fixed;inset:0;z-index:5;overflow:auto;background:linear-gradient(90deg,#071310f5,#0b1b17ed 60%,#081a15e8);display:flex;align-items:center;justify-content:center;padding:28px}.hidden{display:none!important}.shell{width:min(1100px,100%)}header{display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:17px}.seal{display:inline-flex;align-items:center;gap:12px;font-weight:700;font-size:13px;letter-spacing:.06em}.mark{width:30px;height:30px;border:1px solid var(--gold);transform:rotate(45deg);display:inline-grid;place-items:center}.mark span{transform:rotate(-45deg);color:var(--gold)}.edition{font-size:11px;color:var(--muted)}.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center;padding:32px 0 24px}h1{font-size:clamp(36px,5.3vw,66px);letter-spacing:-.065em;line-height:1.12;margin:12px 0 20px;font-weight:850}h1 em{font-style:normal;color:var(--gold)}.intro{max-width:460px;color:#b2c5ba;line-height:1.8}.meta{display:flex;gap:18px;font-size:11px;color:#91a79d;margin-top:22px}.portrait{position:relative;height:210px;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at center,#2c483230,transparent 70%)}.portrait .bigSprite{height:195px;width:auto;image-rendering:pixelated;filter:drop-shadow(0 0 28px #eaa96540)}.toaThumb{height:64px;width:auto;float:right;image-rendering:pixelated;filter:drop-shadow(0 0 5px #ffffff66) drop-shadow(0 2px 4px #0009)}.portrait:before,.portrait:after{content:"";position:absolute;width:200px;height:200px;border:1px solid #e4bb7326;border-radius:50%}.portrait:after{width:270px;height:270px;border-style:dashed}.portrait-label{position:absolute;bottom:0;color:var(--gold);font-size:10px;letter-spacing:.22em}.select-title{display:flex;align-items:center;gap:14px;margin:12px 0 14px}.select-title b{font-size:13px}.select-title span{color:var(--muted);font-size:11px}.roster{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}.toa{position:relative;background:#12231f;border:1px solid #2d4138;border-radius:6px;text-align:left;padding:14px 12px;min-height:126px;transition:.15s}.toa:hover{background:#20352a;transform:translateY(-2px)}.toa.selected{border-color:var(--gold);background:#2c3523;box-shadow:inset 0 -3px var(--gold)}.toa svg{width:34px;height:38px;float:right;opacity:.9}.toa strong{display:block;font-size:18px;margin:7px 0 1px}.toa small{font-size:10px;color:#a6b9ac}.toa .element{color:var(--c);font-size:10px;font-weight:800;letter-spacing:.1em}.bottom{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-top:24px}.loadout{font-size:12px;color:#b4c4b6;max-width:570px}.loadout b{color:var(--gold)}.foot{font-size:10px;color:#7f988a;margin-top:26px;display:flex;justify-content:space-between;gap:14px}.foot button{border:0;padding:0;background:none;color:#a9bbaa;text-decoration:underline}.hud{position:fixed;z-index:2;inset:0;pointer-events:none;padding:24px;display:flex;flex-direction:column;justify-content:space-between}.hud button{pointer-events:auto}.hudtop{display:flex;justify-content:space-between;gap:16px}.panel{background:#081714df;border:1px solid #58705e66;backdrop-filter:blur(8px);border-radius:6px;padding:12px 16px}.health{width:210px}.health-head{display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px}.bar{height:5px;background:#35483b;border-radius:3px;overflow:hidden}.bar i{display:block;height:100%;background:#dd9873;transition:width .1s}.xpbar{position:fixed;top:0;left:0;right:0;height:4px;background:#1d3e36}.xpbar i{display:block;height:100%;background:#9ff1c2}.timer{text-align:center;font-variant-numeric:tabular-nums;min-width:100px}.timer strong{font-size:28px;line-height:1.1;letter-spacing:.05em;display:block}.timer small{font-size:10px;color:var(--gold)}.stats{display:flex;gap:12px;align-items:center;font-size:12px}.hudbottom{display:flex;justify-content:space-between;align-items:end;gap:16px}.weapons{font-size:11px;max-width:390px}.weapons b{display:block;color:var(--gold);font-size:12px;margin-bottom:5px}.controlnote{font-size:10px;color:#a6b9ac}.toast{position:fixed;z-index:3;top:120px;left:50%;transform:translateX(-50%);background:#10281fe8;border:1px solid #8bac76;color:#dfedcc;border-radius:4px;padding:9px 20px;font-size:12px;text-align:center;pointer-events:none;white-space:nowrap}.modal{position:fixed;inset:0;z-index:10;background:#03100ce8;backdrop-filter:blur(8px);display:grid;place-items:center;padding:24px;overflow:auto}.modalbox{max-width:760px;width:100%}.modal h2{font-size:32px;letter-spacing:-.04em;margin:10px 0}.upgrades{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}.upgrade{text-align:left;background:#173026;border:1px solid #48634a;border-radius:6px;padding:22px;min-height:180px}.upgrade:hover{border-color:var(--gold);background:#293b25}.upgrade .num{font-size:11px;color:var(--gold);display:block;margin-bottom:22px}.upgrade strong{display:block;font-size:20px;margin-bottom:10px}.upgrade p{font-size:12px;color:#afc4b1;margin:0}.result-grid{display:flex;gap:35px;padding:20px 0 30px}.result-grid b{font-size:28px;display:block;color:var(--gold)}.result-grid small{color:var(--muted)}.touch{position:fixed;inset:0;z-index:3;pointer-events:none}.stick{position:absolute;left:28px;bottom:100px;width:110px;height:110px;border:1px solid #c9e0b44d;border-radius:50%;background:#133d262b;pointer-events:auto;touch-action:none}.stick i{position:absolute;top:35px;left:35px;width:40px;height:40px;border-radius:50%;background:#c9e0b43d;border:1px solid #c9e0b477}.dash{position:absolute;right:28px;bottom:100px;width:76px;height:76px;border-radius:50%;background:#193a2ac9;border:1px solid #cfdd9b99;pointer-events:auto;font-size:12px;touch-action:none}.sources{max-height:75vh;overflow:auto;background:#10231b;padding:28px;border:1px solid var(--line);border-radius:6px}.sources a{color:var(--gold)}.sources p,.sources li{font-size:13px;color:#b9cbbd}.actions{display:flex;gap:10px;margin-top:22px}.bossbar{position:fixed;z-index:2;top:100px;left:30%;right:30%;text-align:center;font-size:11px;font-weight:700;letter-spacing:.06em;color:#fff0ee;background:#1c0d10d9;border:1px solid #d8778a99;border-radius:5px;padding:7px 12px;text-shadow:0 1px 2px #000,0 0 8px #000}.bossbar .bar{margin-top:6px;height:7px;background:#3a2028;border:1px solid #00000066}.bossbar i{background:linear-gradient(90deg,#ff8fa4,#d94f6b)}.touch .hint{position:absolute;left:28px;bottom:80px;color:#8aa88b;font-size:10px}.statusline{font-size:11px;margin-top:10px;color:#819a8b}.combo{position:fixed;z-index:3;right:34px;top:118px;text-align:right;pointer-events:none;transform-origin:100% 50%;text-shadow:0 2px 0 #07100c,0 0 18px #e4bb7355}.combo b{display:block;font-size:46px;line-height:.95;font-weight:900;color:#f3dda5;letter-spacing:-.04em;font-variant-numeric:tabular-nums}.combo span{font-size:10px;letter-spacing:.22em;color:#c9d8bb}.combo.hot b{color:#ffb27a}.combo.max b{color:#ff8f6e}.lowhp{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;background:radial-gradient(ellipse at center,#0000 38%,#7d1616a0 100%)}.hitveil{position:fixed;inset:0;z-index:4;pointer-events:none;background:#ff4a3a;opacity:0;mix-blend-mode:screen}
@@ -657,6 +652,59 @@ h1,h2,h3,h4,b,strong,.toa strong,.loadout,.coinChip,.customNote,
 .hud,.hud *{font-weight:800}
 .timer strong,.combo b,.result-grid b{font-weight:900!important}
 /* READABILITY-END */
+/* OPT-STATUS-START */
+#touch.mirror .stick{left:auto!important;right:20px!important}
+#touch.mirror .dash{right:auto!important;left:20px!important}
+#touch.mirror .hint{left:auto!important;right:20px!important}
+#menu .menuActions{display:flex;gap:8px;flex-wrap:wrap}
+#menu .menuActions>*{flex:1 1 44%}
+.optList{display:flex;flex-direction:column;gap:10px;margin:14px 0 4px}
+.optRow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:3px solid #3a2c22;border-radius:6px;background:#fdf4dd;color:#241c16;text-align:left;cursor:pointer;font-weight:700}
+.optRow .ol{display:flex;flex-direction:column;gap:2px;min-width:0}
+.optRow b{font-size:14px;font-weight:900}
+.optRow small{font-size:11px;color:#5b4a3a;font-weight:700;line-height:1.3}
+.optSwitch{width:56px;height:28px;border:3px solid #3a2c22;border-radius:999px;background:#cbbfa6;position:relative;flex:0 0 auto}
+.optSwitch i{position:absolute;top:1px;left:1px;width:20px;height:20px;border-radius:50%;background:#fdf4dd;border:2px solid #3a2c22;transition:left .16s}
+.optRow.on .optSwitch{background:#6a9657}
+.optRow.on .optSwitch i{left:28px}
+.statusBox{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:10px;padding:0 4px 10px 0;margin-top:8px;-webkit-overflow-scrolling:touch}
+.scrollTip{text-align:center;font-size:10.5px;font-weight:900;color:#6b563f;padding:2px 0 6px}
+#statusModal .modalbox.parchment{display:flex;flex-direction:column;max-height:92vh;overflow:hidden}
+#statusModal .modalHead{flex:0 0 auto}
+#statusModal .modalHead h2{margin:0}
+.statSec{border:3px solid #3a2c22;border-radius:6px;background:#fdf4dd;padding:9px 12px;color:#241c16}
+.statSec>h3{margin:0 0 7px;font-size:12.5px;font-weight:900;letter-spacing:.04em;color:#5b3a12}
+.statRow{display:flex;justify-content:space-between;gap:10px;font-size:12px;font-weight:700;padding:3px 0;border-bottom:1px dashed #3a2c2233}
+.statRow:last-child{border-bottom:0}
+.statRow>span{color:#4a3a2a;min-width:0}
+.statRow>b{font-weight:900;text-align:right;flex:0 0 auto}
+.statDesc{font-size:11px;font-weight:700;color:#4a3a2a;line-height:1.4}
+.maskLine{display:flex;gap:9px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed #3a2c2233}
+.maskLine:last-child{border-bottom:0}
+.maskLine img{width:28px;height:28px;flex:0 0 auto;image-rendering:pixelated}
+.maskLine .mt{flex:1;min-width:0}
+.maskLine .mt b{font-size:12.5px;font-weight:900;display:block}
+.maskLine .mt small{display:block;font-size:10.5px;color:#4a3a2a;font-weight:700;line-height:1.35}
+.lvChip{flex:0 0 auto;font-size:10.5px;font-weight:900;color:#5b3a12;border:2px solid #3a2c22;border-radius:4px;padding:1px 5px;background:#f0e2c2}
+#upStatus{width:100%;margin-top:8px}
+.modal .actions{flex-wrap:wrap}
+.modal .actions>button{flex:1 1 44%}
+
+.runSum{max-height:34vh;overflow:auto;overscroll-behavior:contain;border:3px solid #3a2c22;border-radius:6px;background:#fdf4dd;color:#241c16;padding:8px 10px 6px;margin:2px 0 10px;text-align:left}
+.runSum>h4{margin:0 0 6px;font-size:11px;font-weight:900;letter-spacing:.08em;color:#5b3a12}
+.runChips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:7px}
+.runChip{display:inline-flex;align-items:center;gap:3px;border:2px solid #3a2c22;border-radius:4px;background:#f0e2c2;padding:1px 5px 1px 3px;font-size:10.5px;font-weight:900;color:#3a2c22;line-height:1.5}
+.runChip img{width:16px;height:16px;image-rendering:pixelated;display:block}
+.runChip i{font-style:normal;font-size:9.5px;color:#7a5a1a;font-weight:900}
+.runChip.aw{background:#ffe9b0;border-color:#8a5a08;color:#5b3a12}
+.runChip.sk{background:#dcebd0;border-color:#3f5a33;color:#2a3d20}
+.runGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(88px,1fr));gap:4px 10px}
+.runGrid span{font-size:10px;font-weight:700;color:#4a3a2a;display:flex;justify-content:space-between;gap:6px;border-bottom:1px dashed #3a2c2233;padding:1px 0}
+.runGrid span b{font-weight:900;color:#241c16}
+.runEmpty{font-size:10.5px;font-weight:700;color:#5b4a3a}
+/* OPT-STATUS-END-CLONE */
+/* OPT-STATUS-END */
+
 /* PARCHMENT-UI-END */
 /* HIGHLANDER-MENU-END */
 
@@ -669,7 +717,7 @@ h1,h2,h3,h4,b,strong,.toa strong,.loadout,.coinChip,.customNote,
  <div class="selection-layout"><div class="orbit-stage">
  <div class="orbit-track" aria-hidden="true"></div><div id="roster" class="roster orbit-roster" role="group" aria-label="토아 선택"></div>
  <div class="portrait orbit-center" id="portrait"><img id="portraitImg" class="bigSprite" alt=""><span class="portrait-label">선택한 수호자</span></div>
- </div><aside class="selection-info"><div class="eyebrow">토아 선택</div><h2>당신의 원소를<br>깨우세요.</h2><div id="loadout" class="loadout"></div><div class="meta"><span>자동 공격 생존전</span><span>한 판 5분</span><span>키보드 · 터치</span></div><div class="acctBar" id="acctBar"><div class="who"><b id="acctWho">게스트</b><small id="acctSub">로그인하면 기록이 저장됩니다</small></div><span class="coinChip" id="acctCoin">0 카노카</span><button id="acctBtn" class="act">로그인</button></div><div class="menuActions"><button id="start" class="primary">섬으로 진입 →</button><button id="customBtn" class="inkBtn" title="캐릭터별 치장">커스터마이징</button></div><p class="select-hint">고리의 토아를 눌러 선택하세요.</p></aside></div>
+ </div><aside class="selection-info"><div class="eyebrow">토아 선택</div><h2>당신의 원소를<br>깨우세요.</h2><div id="loadout" class="loadout"></div><div class="meta"><span>자동 공격 생존전</span><span>한 판 5분</span><span>키보드 · 터치</span></div><div class="acctBar" id="acctBar"><div class="who"><b id="acctWho">게스트</b><small id="acctSub">로그인하면 기록이 저장됩니다</small></div><span class="coinChip" id="acctCoin">0 카노카</span><button id="acctBtn" class="act">로그인</button></div><div class="menuActions"><button id="start" class="primary">섬으로 진입 →</button><button id="customBtn" class="inkBtn" title="캐릭터별 치장">커스터마이징</button><button id="optBtn" class="inkBtn" title="조작·화면 옵션">옵션</button></div><p class="select-hint">고리의 토아를 눌러 선택하세요.</p></aside></div>
  <div class="foot"><span>비공식 팬 게임 · 전투 능력은 게임용 각색</span><button id="openSources">설정 출처 · 조작법</button></div>
 </div></section>
 <div id="hud" class="hud hidden"><div class="hudtop"><div class="topcenter"><div class="panel timer"><small id="phase">감염된 숲</small><strong id="clock">00:00</strong></div><div class="levelbar"><b id="levelNum">Lv 1</b><div class="bar xpmini"><i id="xpfill"></i></div><span id="xpTxt">0/8</span></div></div><div class="stats"><span id="kills">해방 0</span><button id="shakeBtn" class="ghost" aria-label="화면 흔들림 강도">흔들림 약하게</button><button id="sound" class="ghost" aria-label="효과음 전환">소리 꺼짐</button><button id="pause" class="ghost">일시정지</button></div></div><div id="maskBar" class="maskBar hidden"></div><div class="hudbottom"><div class="panel weapons"><b id="weaponLabel">원소 공명</b><span id="weaponList"></span><div id="dashState"><img class="dIco" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAABIUlEQVR42mNgGAXDGbAKyfwnR44UwESqY7BZjE+OJg6qOPfhP67QwCdHDmAkxTG9LjoocsV7rjDgkvv97gkj1UMI3ffIDkBmY+OTG1JM+NIMzNdZOvwYFuOTo8RRjIRyzN0Xj+Hi0658RIkadDlqRB/WEEI2QFlCFi6epcOPEgroctQIKZxRNlCOwpuoB8JRBMshejuKqIKRno4iuuqgtqModhC9HMVEasFFqaOo7iBKC02qOohaJTi+kpuJ3o6hSi6jZ93GNJgcQ9BBA1HrMw0mx+B00KBuD8EsgtHIhR+6HDXa1oyktKmRLcRWDVCjoY83UXcYCTDishDdcmr1OogCFec+/GcVkkHBxMjRpF+GLaGj+x6f3JDv24+CUUApAACC/UBOPxzlxwAAAABJRU5ErkJggg==" alt=""><b id="dashNum2">1/1</b><div class="dashGauge" id="dashGauge"><i id="dashFill"></i></div><span id="dashTime"></span></div><div id="invWrap" class="invWrap"><i id="invFill"></i><em id="invTxt">무적</em></div></div><div class="controlnote"><span class="cn-row"><kbd>WASD</kbd><kbd>↑↓←→</kbd>이동</span><span class="cn-sep">·</span><span class="cn-row"><kbd>SPACE</kbd>돌진</span><span class="cn-sep">·</span><span class="cn-row"><kbd>Z</kbd><kbd>X</kbd><kbd>C</kbd>카노히</span><span class="cn-sep">·</span><span class="cn-row"><kbd>V</kbd>노바</span><span class="cn-sep">·</span><span class="cn-row"><kbd>P</kbd>일시정지</span></div></div></div>
@@ -681,9 +729,12 @@ h1,h2,h3,h4,b,strong,.toa strong,.loadout,.coinChip,.customNote,
 <div id="wetTag" class="wetTag hidden">늪지 · 이동 -45%</div>
 <div id="toast" class="toast hidden"></div>
 <div id="touch" class="touch hidden"><div id="stick" class="stick" aria-label="이동 조이스틱"><i id="knob"></i></div><span class="hint">끌어서 이동</span><button id="dash" class="dash" aria-label="돌진"><img class="dIco" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAABIUlEQVR42mNgGAXDGbAKyfwnR44UwESqY7BZjE+OJg6qOPfhP67QwCdHDmAkxTG9LjoocsV7rjDgkvv97gkj1UMI3ffIDkBmY+OTG1JM+NIMzNdZOvwYFuOTo8RRjIRyzN0Xj+Hi0658RIkadDlqRB/WEEI2QFlCFi6epcOPEgroctQIKZxRNlCOwpuoB8JRBMshejuKqIKRno4iuuqgtqModhC9HMVEasFFqaOo7iBKC02qOohaJTi+kpuJ3o6hSi6jZ93GNJgcQ9BBA1HrMw0mx+B00KBuD8EsgtHIhR+6HDXa1oyktKmRLcRWDVCjoY83UXcYCTDishDdcmr1OogCFec+/GcVkkHBxMjRpF+GLaGj+x6f3JDv24+CUUApAACC/UBOPxzlxwAAAABJRU5ErkJggg=="><b id="dashNum">1</b></button></div>
-<section id="upgradeModal" class="modal hidden"><div class="modalbox"><div class="eyebrow">원소의 힘이 깨어납니다</div><h2 id="upTitle">성장 선택</h2><p class="muted">하나를 선택하세요. 선택하는 동안 시간은 멈춥니다.</p><div id="upgradeCards" class="upgrades"></div><div class="muted" style="font-size:11px">키보드 1 · 2 · 3 으로도 선택할 수 있습니다.</div></div></section>
-<section id="pauseModal" class="modal hidden"><div class="modalbox"><div class="eyebrow">잠시 숨을 고르세요</div><h2>일시정지</h2><p class="muted">WASD / 방향키 이동 · 스페이스 돌진<br>카노히 능력 Z / X / C · 노바 블래스트 V (모든 토아 기본 보유) — 이동 중에도 바로 사용<br>물웅덩이·늪지대 위에서는 이동이 느려집니다 (카노히 카우카우로 무시).<br>빛의 돌을 모아 성장하고, 4분에 등장하는 카네라를 쓰러뜨리세요.</p><div class="actions"><button id="resume" class="primary">계속하기</button><button id="quit" class="ghost">토아 선택으로</button></div></div></section>
-<section id="endModal" class="modal hidden"><div class="modalbox"><div id="endEmblem" class="emblem" aria-hidden="true"></div><div id="endTag" class="eyebrow"></div><h2 id="endTitle"></h2><p id="endText" class="muted"></p><div class="result-grid"><div><b id="endTime"></b><small>생존 시간</small></div><div><b id="endScore"></b><small>점수</small></div><div><b id="endKills"></b><small>해방한 라히</small></div><div><b id="endLevel"></b><small>도달 레벨</small></div></div><p id="record" class="muted"></p><div class="actions"><button id="retry" class="primary">다시 도전</button><button id="return" class="ghost">토아 선택</button></div></div></section>
+<section id="upgradeModal" class="modal hidden"><div class="modalbox"><div class="eyebrow">원소의 힘이 깨어납니다</div><h2 id="upTitle">성장 선택</h2><p class="muted">하나를 선택하세요. 선택하는 동안 시간은 멈춥니다.</p><div id="upgradeCards" class="upgrades"></div><div class="muted" style="font-size:11px">키보드 1 · 2 · 3 으로도 선택할 수 있습니다.</div><button id="upStatus" class="ghost">현재 상태창 보기</button></div></section>
+<section id="pauseModal" class="modal hidden"><div class="modalbox"><div class="eyebrow">잠시 숨을 고르세요</div><h2>일시정지</h2><p class="muted">WASD / 방향키 이동 · 스페이스 돌진<br>카노히 능력 Z / X / C · 노바 블래스트 V (모든 토아 기본 보유) — 이동 중에도 바로 사용<br>물웅덩이·늪지대 위에서는 이동이 느려집니다 (카노히 카우카우로 무시).<br>빛의 돌을 모아 성장하고, 4분에 등장하는 카네라를 쓰러뜨리세요.</p><div class="actions"><button id="resume" class="primary">계속하기</button><button id="statusBtn" class="ghost">상태창</button><button id="optBtn2" class="ghost">옵션</button><button id="quit" class="ghost">토아 선택으로</button></div></div></section>
+
+<section id="optModal" class="modal hidden"><div class="modalbox parchment"><div class="modalHead"><h2>옵션</h2><button class="xclose" id="optClose" aria-label="닫기">×</button></div><div class="optList"><button class="optRow" id="optMirror" role="switch" aria-checked="false"><span class="ol"><b>모바일 컨트롤 좌우반전</b><small id="optMirrorVal">조이스틱 왼쪽 · 돌진 오른쪽</small></span><span class="optSwitch"><i></i></span></button><button class="optRow" id="optShake"><span class="ol"><b>화면 흔들림</b><small id="optShakeVal">흔들림 약하게</small></span><span class="optSwitch"><i></i></span></button><button class="optRow" id="optSound"><span class="ol"><b>효과음</b><small id="optSoundVal">꺼짐</small></span><span class="optSwitch"><i></i></span></button></div><p class="tiny">설정은 이 브라우저에 저장됩니다. 좌우반전은 터치 조작 화면에 바로 적용됩니다.</p></div></section>
+<section id="statusModal" class="modal hidden"><div class="modalbox parchment"><div class="modalHead"><h2>상태창</h2><button class="xclose" id="statusClose" aria-label="닫기">×</button></div><div id="statusBody" class="statusBox"></div></div></section>
+<section id="endModal" class="modal hidden"><div class="modalbox"><div id="endEmblem" class="emblem" aria-hidden="true"></div><div id="endTag" class="eyebrow"></div><h2 id="endTitle"></h2><p id="endText" class="muted"></p><div class="result-grid"><div><b id="endTime"></b><small>생존 시간</small></div><div><b id="endScore"></b><small>점수</small></div><div><b id="endKills"></b><small>해방한 라히</small></div><div><b id="endLevel"></b><small>도달 레벨</small></div></div><div id="runSummary" class="runSum"></div><p id="record" class="muted"></p><div class="actions"><button id="retry" class="primary">다시 도전</button><button id="return" class="ghost">토아 선택</button></div></div></section>
 
 <section id="acctModal" class="modal hidden"><div class="modalbox parchment" style="max-width:420px;width:min(94vw,420px)"><div class="modalHead"><h2 id="acctTitle">계정</h2><button class="xclose" data-close="acctModal" aria-label="닫기">×</button></div><div class="acctTabs"><button id="tabLogin" class="on">로그인</button><button id="tabSignup">계정 만들기</button></div><form id="acctForm" autocomplete="on"><label>아이디<input id="acctUser" name="username" autocomplete="username" maxlength="16" placeholder="영문·숫자 3~16자" required></label><label>비밀번호<input id="acctPass" name="password" type="password" autocomplete="current-password" maxlength="64" placeholder="6자 이상" required></label><label id="acctPass2Wrap" class="hidden">비밀번호 확인<input id="acctPass2" type="password" maxlength="64"></label><p id="acctMsg" class="acctMsg"></p><button type="submit" id="acctSubmit" class="primary">로그인</button></form><div class="acctFoot"><button id="acctLogout" class="ghost hidden">로그아웃</button><p class="tiny">아이디·비밀번호는 <b>이 브라우저에만</b> 저장되는 세이브 찾기용 값입니다. 실제 개인정보(이름·이메일)를 넣지 마세요. 브라우저 데이터를 지우면 계정도 함께 사라집니다.</p></div></div></section>
 <section id="customModal" class="modal hidden"><div class="modalbox parchment"><div class="modalHead"><h2>커스터마이징</h2><span class="coinChip" id="customCoin">0 카노카</span><button class="xclose" data-close="customModal" aria-label="닫기">×</button></div><div class="customTabs" id="customTabs"></div><div class="customBody"><div class="customSlots"><div class="slot active" id="slotColor"><span class="lockTag hidden" id="slotLock">미리보기</span><button class="arrowBtn l" id="colPrev" aria-label="이전 색상">‹</button><span class="swatchDot" id="slotSwatch"></span><b>색상</b><button class="arrowBtn r" id="colNext" aria-label="다음 색상">›</button></div><div class="slot locked"><span class="lockTag">업데이트 예정</span><span class="slotIcon" style="font-size:22px">⚙</span><b>부품</b></div><div class="slot locked"><span class="lockTag">업데이트 예정</span><span class="slotIcon" style="font-size:22px">◈</span><b>발·장식</b></div></div><div class="customPreview"><div class="pillar l"></div><div class="pillar r"></div><img id="customArt" alt=""><div class="name" id="customName">타후</div><div class="pedestal"></div></div></div><div class="colorRow" id="colorRow"></div><p class="customNote" id="customNote"></p><div class="customFoot"><button class="inkBtn" data-close="customModal">닫기</button></div></div></section>
@@ -750,8 +801,98 @@ function toast(text){$('toast').textContent=text;show('toast');toastTimer=2.8}
 let noiseBuf=null;
 function noise(power=1,pitch=1){if(!sound)return;try{audio??=new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();if(!noiseBuf){noiseBuf=audio.createBuffer(1,Math.floor(audio.sampleRate*.14),audio.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3)}const src=audio.createBufferSource();src.buffer=noiseBuf;const f=audio.createBiquadFilter();f.type='bandpass';f.frequency.value=420*pitch;f.Q.value=.9;const v=audio.createGain();v.gain.setValueAtTime(.11*power,audio.currentTime);v.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.13);src.connect(f);f.connect(v);v.connect(audio.destination);src.start();src.stop(audio.currentTime+.14)}catch{}}
 function beep(freq=300,duration=.06){if(!sound)return;try{audio??=new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();const o=audio.createOscillator(),v=audio.createGain();o.type='triangle';o.frequency.setValueAtTime(freq,audio.currentTime);o.frequency.exponentialRampToValueAtTime(freq*.5,audio.currentTime+duration);v.gain.setValueAtTime(.045,audio.currentTime);v.gain.exponentialRampToValueAtTime(.001,audio.currentTime+duration);o.connect(v);v.connect(audio.destination);o.start();o.stop(audio.currentTime+duration)}catch{sound=false;$('sound').textContent='소리 꺼짐'}}
-function start(){const t=TOA[selected];if(typeof equippedColor==='function'){HERO_FROM=selected;HERO_CI=equippedColor(selected)}g={time:0,p:{x:0,y:0,hp:t.hp,maxHp:t.hp,speed:t.speed,inv:0,dash:0,dashCD:0,dashCharges:1,dashMax:1,dashRe:0,dx:0,dy:-1,face:1,walkT:0,moving:false,dashHit:null},weapons:[{id:selected,level:1,cd:.35}],enemies:[],shots:[],gems:[],fx:[],kills:0,xp:0,need:8,level:1,pending:0,damage:1,haste:1,magnet:110,armor:0,regen:0,masks:{},mastery:0,dashDist:1,shield:0,shieldMax:0,shieldTick:0,invisT:0,invisMax:3,invisFade:0,xrayT:0,clone:null,abilities:[],abilitySlots:[],spawn:.1,bossSpawned:false,bossDefeated:false,serial:0,shake:0,shx:0,shy:0,shakeT:0,hitstop:0,zoom:1,zoomV:0,dmgFlash:0,combo:0,comboT:0,comboPop:0,particles:[],dmgNums:[],flashW:0,slowmo:0,recoil:0,awaken:null,fires:[],fireDrop:0,floatT:0,floatCd:0,cap:110,capMax:120,capMin:64,touch:touchDevice(),ftAvg:16,nova:{level:1,cd:0,cdMax:30},hauWaveCd:0,score:0};state='playing';clearInput();['menu','endModal','pauseModal','upgradeModal','bossbar'].forEach(hide);g.cap=touchDevice()?76:110;g.capMax=g.cap;show('hud');if(touchDevice())show('touch');else hide('touch');toast(`${t.name}, 섬의 어둠을 몰아내세요`);updateHUD()}
-function menu(){state='menu';g=null;['hud','touch','endModal','pauseModal','upgradeModal','bossbar','toast'].forEach(hide);show('menu');clearInput()}
+function start(){const t=TOA[selected];if(typeof equippedColor==='function'){HERO_FROM=selected;HERO_CI=equippedColor(selected)}g={time:0,p:{x:0,y:0,hp:t.hp,maxHp:t.hp,speed:t.speed,inv:0,dash:0,dashCD:0,dashCharges:1,dashMax:1,dashRe:0,dx:0,dy:-1,face:1,walkT:0,moving:false,dashHit:null},weapons:[{id:selected,level:1,cd:.35}],enemies:[],shots:[],gems:[],fx:[],kills:0,xp:0,need:8,level:1,pending:0,damage:1,haste:1,magnet:110,armor:0,regen:0,masks:{},mastery:0,dashDist:1,shield:0,shieldMax:0,shieldTick:0,invisT:0,invisMax:3,invisFade:0,xrayT:0,clone:null,abilities:[],abilitySlots:[],spawn:.1,bossSpawned:false,bossDefeated:false,serial:0,shake:0,shx:0,shy:0,shakeT:0,hitstop:0,zoom:1,zoomV:0,dmgFlash:0,combo:0,comboT:0,comboPop:0,particles:[],dmgNums:[],flashW:0,slowmo:0,recoil:0,awaken:null,fires:[],fireDrop:0,floatT:0,floatCd:0,cap:110,capMax:120,capMin:64,touch:touchDevice(),ftAvg:16,nova:{level:1,cd:0,cdMax:30},hauWaveCd:0,score:0};state='playing';clearInput();['menu','endModal','pauseModal','upgradeModal','statusModal','optModal','bossbar'].forEach(hide);g.cap=touchDevice()?76:110;g.capMax=g.cap;show('hud');if(touchDevice())show('touch');else hide('touch');toast(`${t.name}, 섬의 어둠을 몰아내세요`);updateHUD()}
+function menu(){state='menu';g=null;['hud','touch','endModal','pauseModal','upgradeModal','statusModal','optModal','bossbar','toast'].forEach(hide);show('menu');clearInput()}
+
+/* OPT-STATUS-START */
+var OPT={mirror:false};
+try{OPT=Object.assign(OPT,JSON.parse(localStorage.getItem('mn_opt_v1')||'{}'))}catch{}
+function saveOpt(){try{localStorage.setItem('mn_opt_v1',JSON.stringify(OPT))}catch{}}
+function syncOpt(){
+  const t=$('touch');if(t)t.classList.toggle('mirror',!!OPT.mirror);
+  const mr=$('optMirror');
+  if(mr){mr.classList.toggle('on',!!OPT.mirror);mr.setAttribute('aria-checked',OPT.mirror?'true':'false');
+    const v=$('optMirrorVal');if(v)v.textContent=OPT.mirror?'조이스틱 오른쪽 · 돌진 왼쪽':'조이스틱 왼쪽 · 돌진 오른쪽';}
+  const sh=$('optShake'),sv=$('optShakeVal');
+  if(sh){const cur=SHAKE_STEPS[shakeStep]||SHAKE_STEPS[1];sh.classList.toggle('on',FEEL.shake>0.05);if(sv)sv.textContent=cur.label;}
+  const so=$('optSound'),sov=$('optSoundVal');
+  if(so){so.classList.toggle('on',!!sound);if(sov)sov.textContent=sound?'켜짐':'꺼짐';}
+}
+function openOpt(){syncOpt();show('optModal')}
+function closeOpt(){hide('optModal')}
+function openStatus(){buildStatus();show('statusModal')}
+function closeStatus(){hide('statusModal')}
+function statusLine(k,v){return '<div class="statRow"><span>'+k+'</span><b>'+v+'</b></div>'}
+function buildStatus(){
+  const box=$('statusBody');if(!box)return;
+  if(!g){box.innerHTML='<div class="statSec"><h3>상태창</h3><div class="statDesc">게임을 시작하면 이번 판의 누적 강화를 확인할 수 있습니다.</div></div>';return}
+  const t=TOA[selected],p=g.p,mm=g.mastery||0;
+  const totalMul=g.damage*(1+0.15*mm);
+  const owned=MASKS.filter(m=>(g.masks[m.id]||0)>0);
+  let h='';
+  h+='<div class="statSec"><h3>'+t.name+' · '+t.element+'의 토아</h3>'
+    +statusLine('레벨','Lv '+g.level+' · 숙련 '+mm)
+    +statusLine('생존 시간',timeFmt(g.time||0))
+    +statusLine('해방한 라히',g.kills+'마리')
+    +statusLine('점수',Math.round(g.score))
+    +statusLine('체력',Math.ceil(p.hp)+' / '+Math.round(p.maxHp))
+    +'</div>';
+  h+='<div class="statSec"><h3>현재 누적 강화</h3>'
+    +statusLine('총 피해 배율','×'+totalMul.toFixed(2))
+    +statusLine('피해량(파카리)','+'+Math.round((g.damage-1)*100)+'%')
+    +statusLine('이동 속도','+'+Math.round((p.speed/t.speed-1)*100)+'%')
+    +statusLine('기본공격 쿨','-'+Math.round((1-cdMul())*100)+'%')
+    +statusLine('돌진',p.dashMax+'회 · 거리 +'+Math.round((g.dashDist-1)*100)+'%')
+    +statusLine('흡수 범위',Math.round(g.magnet))
+    +statusLine('방어도',Math.round(g.shield)+' / '+Math.round(g.shieldMax))
+    +statusLine('초당 재생',(g.regen||0).toFixed(1))
+    +statusLine('XRAY 피해','+'+curAkakuPct()+'%')
+    +'</div>';
+  h+='<div class="statSec"><h3>기본기 숙련 '+mm+'</h3>'
+    +'<div class="statDesc">'+MASTERY[selected]+'</div>'
+    +statusLine('숙련 피해 배율','×'+(1+0.15*mm).toFixed(2))
+    +statusLine('숙련 피해량','+'+Math.round(15*mm)+'%')
+    +'</div>';
+  if(g.awaken){const A=awakenOf();
+    h+='<div class="statSec"><h3>원소 각성</h3><div class="statRow"><span>'+A.name+'</span><b>적용 중</b></div><div class="statDesc">'+A.desc+'</div></div>';
+  }else{
+    h+='<div class="statSec"><h3>노바 블래스트</h3>'+statusLine('레벨',g.nova.level)+statusLine('쿨타임',g.nova.cdMax+'초')+'</div>';
+  }
+  if(owned.length){
+    h+='<div class="statSec"><h3>보유 카노히 '+owned.length+'종</h3>';
+    for(const m of owned){const lv=g.masks[m.id]||1;
+      h+='<div class="maskLine">'+(MASK_ART[m.id]?'<img src="'+MASK_ART[m.id]+'" alt="">':'')+'<div class="mt"><b>'+m.name+'</b><small>'+m.desc(lv-1)+'</small></div><span class="lvChip">'+lv+'/'+m.max+'</span></div>'}
+    h+='</div>';
+  }
+  if(g.abilities&&g.abilities.length){
+    const NAMES={huna:'후나 · 은신',komau:'코마우 · 조종',mahiki:'마히키 · 분신',akaku:'아카쿠 · XRAY'};
+    h+='<div class="statSec"><h3>장착 능력</h3>';
+    for(const a of g.abilities)h+='<div class="statRow"><span>'+(NAMES[a.id]||a.id)+'</span><b>쿨 '+Math.round(a.cdMax)+'초</b></div>';
+    h+='</div>';
+  }
+  h+='<div class="statSec"><h3>강화 요약</h3><div class="statDesc">카노히 '+owned.reduce((n,m)=>n+(g.masks[m.id]||0),0)+'회 · 숙련 '+mm+'회 · '+(g.awaken?'각성 완료':'노바 Lv'+g.nova.level)+'</div></div>';
+  h+='<div class="scrollTip">↑ 아래로 스크롤하면 전체 강화를 볼 수 있습니다</div>';
+  box.innerHTML=h;
+  box.scrollTop=0;
+}
+document.getElementById('optBtn')?.addEventListener('click',openOpt);
+document.getElementById('optBtn2')?.addEventListener('click',openOpt);
+document.getElementById('optClose')?.addEventListener('click',closeOpt);
+document.getElementById('statusClose')?.addEventListener('click',closeStatus);
+document.getElementById('statusBtn')?.addEventListener('click',openStatus);
+document.getElementById('upStatus')?.addEventListener('click',openStatus);
+document.getElementById('optMirror')?.addEventListener('click',()=>{OPT.mirror=!OPT.mirror;saveOpt();syncOpt()});
+document.getElementById('optShake')?.addEventListener('click',()=>{const b=document.getElementById('shakeBtn');if(b){b.click();syncOpt()}});
+document.getElementById('optSound')?.addEventListener('click',()=>{const b=document.getElementById('sound');if(b){b.click();syncOpt()}});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    if(!$('statusModal').classList.contains('hidden')){closeStatus();e.preventDefault();e.stopPropagation();return}
+    if(!$('optModal').classList.contains('hidden')){closeOpt();e.preventDefault();e.stopPropagation();return}
+  }
+},true);
+if(typeof setTimeout==='function')setTimeout(syncOpt,0);
+/* OPT-STATUS-END */
+
 function pause(){if(state==='playing'){state='paused';clearInput();show('pauseModal');hide('touch')}else if(state==='paused'){state='playing';hide('pauseModal');if(touchDevice())show('touch')}}
 function dash(){if(state!=='playing'||!g)return;const p=g.p;
  if(p.dashCharges<=0)return;if(p.dashCharges===p.dashMax)p.dashRe=0;
@@ -779,7 +920,30 @@ function novaAt(x,y,level,main){
   if(!e.dead){e.kx=(e.kx||0)+Math.cos(a)*(main?420:260);e.ky=(e.ky||0)+Math.sin(a)*(main?420:260)}}
 }
 function timeFmt(t){return `${Math.floor(t/60).toString().padStart(2,'0')}:${Math.floor(t%60).toString().padStart(2,'0')}`}
-function finish(win){state='ended';$('endModal').classList.toggle('won',!!win);hide('touch');hide('upgradeModal');hide('bossbar');show('endModal');$('endTag').textContent=win?'섬에 다시 빛이 돌아옵니다':'다시, 원소의 힘을 모으세요';$('endTitle').textContent=win?'마타 누이를 지켜냈습니다':'수호자의 도전은 계속됩니다';$('endText').textContent=win?'카네라를 쓰러뜨리고 마지막 공세를 버텼습니다.':g.time>=300?'시간 내 카네라를 쓰러뜨리지 못했습니다. 다음에는 화력을 집중해 보세요.':'라히에게 포위되었습니다. 돌진으로 틈을 만들고 빛의 돌을 모아 보세요.';$('endTime').textContent=timeFmt(g.time);$('endScore').textContent=g.score;$('endKills').textContent=g.kills;$('endLevel').textContent=g.level;if(typeof saveRunResult==='function')saveRunResult(g.score);let best=g.score;try{best=Math.max(Number(localStorage.getItem('mata-nui-best'))||0,g.score);localStorage.setItem('mata-nui-best',String(best));$('record').textContent=`이 브라우저 최고 점수: ${best}점`}catch{$('record').textContent='기록 저장이 차단되어 이번 결과만 표시합니다.'}clearInput()}
+
+function buildRunSummary(){
+  const box=$('runSummary');if(!box||!g)return;
+  const t=TOA[selected],mm=g.mastery||0,p=g.p;
+  const owned=MASKS.filter(m=>(g.masks[m.id]||0)>0);
+  const A=g.awaken?AWAKEN.find(a=>a.id===g.awaken):null;
+  let h='<h4>이번 판 선택한 보상</h4><div class="runChips">';
+  if(A)h+='<span class="runChip aw">각성 · '+A.name+'</span>';
+  else h+='<span class="runChip sk">노바 블래스트 Lv'+g.nova.level+'</span>';
+  if(mm>0)h+='<span class="runChip sk">숙련 '+mm+'</span>';
+  for(const m of owned){const lv=g.masks[m.id]||1;
+    h+='<span class="runChip">'+(MASK_ART[m.id]?'<img src="'+MASK_ART[m.id]+'" alt="">':'')+m.name.replace('카노히 ','')+'<i>'+lv+'</i></span>'}
+  if(!owned.length&&!mm&&!A)h+='<span class="runEmpty">아직 보상을 고르지 못했습니다</span>';
+  h+='</div><div class="runGrid">'
+    +'<span>총 피해<b>×'+(g.damage*(1+0.15*mm)).toFixed(2)+'</b></span>'
+    +'<span>이동<b>+'+Math.round((p.speed/t.speed-1)*100)+'%</b></span>'
+    +'<span>공격 쿨<b>-'+Math.round((1-cdMul())*100)+'%</b></span>'
+    +'<span>돌진<b>'+p.dashMax+'회</b></span>'
+    +'<span>방어도<b>'+Math.round(g.shieldMax)+'</b></span>'
+    +'<span>흡수<b>'+Math.round(g.magnet)+'</b></span>'
+    +'</div>';
+  box.innerHTML=h;box.scrollTop=0;
+}
+function finish(win){state='ended';$('endModal').classList.toggle('won',!!win);hide('touch');hide('upgradeModal');hide('bossbar');show('endModal');$('endTag').textContent=win?'섬에 다시 빛이 돌아옵니다':'다시, 원소의 힘을 모으세요';$('endTitle').textContent=win?'마타 누이를 지켜냈습니다':'수호자의 도전은 계속됩니다';$('endText').textContent=win?'카네라를 쓰러뜨리고 마지막 공세를 버텼습니다.':g.time>=300?'시간 내 카네라를 쓰러뜨리지 못했습니다. 다음에는 화력을 집중해 보세요.':'라히에게 포위되었습니다. 돌진으로 틈을 만들고 빛의 돌을 모아 보세요.';$('endTime').textContent=timeFmt(g.time);$('endScore').textContent=g.score;$('endKills').textContent=g.kills;$('endLevel').textContent=g.level;if(typeof buildRunSummary==='function')buildRunSummary();if(typeof saveRunResult==='function')saveRunResult(g.score);let best=g.score;try{best=Math.max(Number(localStorage.getItem('mata-nui-best'))||0,g.score);localStorage.setItem('mata-nui-best',String(best));$('record').textContent=`이 브라우저 최고 점수: ${best}점`}catch{$('record').textContent='기록 저장이 차단되어 이번 결과만 표시합니다.'}clearInput()}
 const MASK_CD={huna:20,komau:15,mahiki:30,akaku:15};
 const AK_KEYS=['KeyZ','KeyX','KeyC'],AK_LABEL=['Z','X','C'];
 const cdOf=id=>{const a=g.abilities.find(x=>x.id===id);return a?a.cdMax:(MASK_CD[id]||0)};
