@@ -779,7 +779,7 @@ h1,h2,h3,h4,b,strong,.toa strong,.loadout,.coinChip,.customNote,
 <div id="lowhp" class="lowhp"></div><div id="dmgflash" class="hitveil"></div><div id="warnveil" style="position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;background:radial-gradient(ellipse at center,#0000 30%,#a01212cc 100%)"></div>
 <div id="novaWrap" class="novaWrap hidden"><button id="nova" class="novaBtn" aria-label="노바 블래스트"><b>노바</b><span id="novaState">준비</span></button></div>
 <div id="abilityBar" class="abilityBar hidden"></div>
-<div id="wetTag" class="wetTag hidden">늪지 · 이동 -45%</div>
+<div id="wetTag" class="wetTag hidden">늪지 · 이동 -45%</div><div id="jetTag" class="wetTag hidden" style="bottom:316px;font-size:12px">워터 젯</div>
 <div id="toast" class="toast hidden"></div>
 <div id="touch" class="touch hidden"><div id="stick" class="stick" aria-label="이동 조이스틱"><i id="knob"></i></div><span class="hint">끌어서 이동</span><button id="dash" class="dash" aria-label="돌진"><img class="dIco" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAABIUlEQVR42mNgGAXDGbAKyfwnR44UwESqY7BZjE+OJg6qOPfhP67QwCdHDmAkxTG9LjoocsV7rjDgkvv97gkj1UMI3ffIDkBmY+OTG1JM+NIMzNdZOvwYFuOTo8RRjIRyzN0Xj+Hi0658RIkadDlqRB/WEEI2QFlCFi6epcOPEgroctQIKZxRNlCOwpuoB8JRBMshejuKqIKRno4iuuqgtqModhC9HMVEasFFqaOo7iBKC02qOohaJTi+kpuJ3o6hSi6jZ93GNJgcQ9BBA1HrMw0mx+B00KBuD8EsgtHIhR+6HDXa1oyktKmRLcRWDVCjoY83UXcYCTDishDdcmr1OogCFec+/GcVkkHBxMjRpF+GLaGj+x6f3JDv24+CUUApAACC/UBOPxzlxwAAAABJRU5ErkJggg=="><b id="dashNum">1</b></button></div>
 <section id="upgradeModal" class="modal hidden"><div class="modalbox"><div class="eyebrow">원소의 힘이 깨어납니다</div><h2 id="upTitle">성장 선택</h2><p class="muted">하나를 선택하세요. 선택하는 동안 시간은 멈춥니다.</p><div id="upgradeCards" class="upgrades"></div><div class="muted" style="font-size:11px">키보드 1 · 2 · 3 으로도 선택할 수 있습니다.</div><button id="upStatus" class="ghost">현재 상태창 보기</button></div></section>
@@ -799,7 +799,7 @@ h1,h2,h3,h4,b,strong,.toa strong,.loadout,.coinChip,.customNote,
 const $=id=>document.getElementById(id),canvas=$('world'),ctx=canvas.getContext('2d');
 const TOA=[
  {name:'타후',element:'불',color:'#f29261',dark:'#913f2a',tool:'불꽃 검',desc:'화염구 · 1초 뒤 절반 피해 추가',rate:.9,damage:24,speed:175,hp:110},
- {name:'갈리',element:'물',color:'#68cce7',dark:'#226387',tool:'쌍갈고리',desc:'물의 파동 · 주변 적에게 25% 피해',rate:1.05,damage:19,speed:183,hp:110},
+ {name:'갈리',element:'물',color:'#68cce7',dark:'#226387',tool:'쌍갈고리',desc:'물의 파동 · 주변 적에게 35% 피해',rate:1.05,damage:19,speed:183,hp:110},
  {name:'레와',element:'공기',color:'#a5db74',dark:'#337447',tool:'도끼',desc:'절풍 · 적 1명 관통',rate:.7,damage:17,speed:208,hp:95},
  {name:'코파카',element:'얼음',color:'#e1f4f2',dark:'#719da7',tool:'얼음 검과 방패',desc:'얼음검 · 0.5초간 이동속도 절반',rate:1,damage:21,speed:172,hp:140},
  {name:'오누아',element:'대지',color:'#2e2b36',dark:'#0f0d13',tool:'발톱',desc:'충격파 · 주변에 즉시 광역 피해',rate:1.25,damage:30,speed:165,hp:150},
@@ -1044,7 +1044,7 @@ const MASKS=[
 
 const AWAKEN=[
  {id:'tahu',mask:'hau',name:'용암 서핑',desc:'돌진 횟수 +1 · 돌진 경로에 5초간 불길을 남깁니다. 불길에 닿은 적은 이동 -50%와 매번 기본 피해 150%를 받습니다.',bind:g=>{g.p.dashMax+=1;g.p.dashCharges=g.p.dashMax}},
- {id:'gali',mask:'kaukau',name:'심해 생성',desc:'물·늪지에서 적도 이동 -45% · 카노히 카우카우 +2를 즉시 얻습니다.',bind:g=>{g.masks.kaukau=(g.masks.kaukau||0)+2}},
+ {id:'gali',mask:'kaukau',name:'워터 젯',desc:'[V] 10초간 가장 가까운 적에게 일직선 물줄기를 쏴 지속 피해(초당 기본 피해의 160%)를 줍니다. 쿨타임 15초. 줄기에 닿은 중간 적은 절반의 지속 피해를 받고, 기본기 숙련마다 줄기가 두꺼워지고 피해가 증가합니다. 물웅덩이 위에선 쿨타임이 50% 감소하고, 늪지대 위에선 피해량이 40% 증가합니다. 기본 공격의 물의 파동은 이펙트와 범위가 2배입니다.',bind:g=>{}},
  {id:'lewa',mask:'miru',name:'활강',desc:'마지막 돌진 후 2초간 부양합니다. 부양 중 피격·감속·기본공격 불가, 착지 시 기본 피해 2배 충격파. (쿨 12초)',bind:g=>{}},
  {id:'kopaka',mask:'akaku',name:'근접전투',desc:'적이 근접하면 가장 가까운 적을 추가로 근접 공격합니다(기본 피해 2배). 아카쿠 사용 중이면 근접한 모든 적을 공격합니다.',bind:g=>{}},
  {id:'onua',mask:'pakari',name:'붕괴',desc:'기본공격으로 적을 처치할 때마다 가장 가까운 적에게 바위를 떨어뜨려, 착탄 지점 주변에 기본 피해 3배를 줍니다.',bind:g=>{}},
@@ -1210,7 +1210,7 @@ function shoot(w){
   const n=Math.min(cnt,Math.max(1,pool.length));
   for(let i=0;i<n;i++){const tg=pool[i]||target,aa=Math.atan2(tg.y-p.y,tg.x-p.x);
    if(id===0)mk({id:0,vx:Math.cos(aa)*430,vy:Math.sin(aa)*430,r:11*size,damage:dmg,ttl:2.1,pierce:1,burn:dmg*.5,angle:aa});
-   else if(id===1)mk({id:1,vx:Math.cos(aa)*360,vy:Math.sin(aa)*360,r:13*size,damage:dmg,ttl:1.8,pierce:1,splashR:100*size,splash:dmg*.25,angle:aa});
+   else if(id===1)mk({id:1,vx:Math.cos(aa)*360,vy:Math.sin(aa)*360,r:13*size,damage:dmg,ttl:1.8,pierce:1,splashR:200*size,splash:dmg*.35,angle:aa});
    else if(id===2)mk({id:2,vx:Math.cos(aa)*560,vy:Math.sin(aa)*560,r:12*size,damage:dmg,ttl:1.3,pierce:2+mm,angle:aa});
    else if(id===5)mk({id:5,vx:Math.cos(aa)*340,vy:Math.sin(aa)*340,r:11*size,damage:dmg,ttl:2,pierce:1,bounce:1+mm,angle:aa})}}
  g.recoil=.1;beep(190+id*55,.035);
@@ -1377,13 +1377,25 @@ function tick(dt){if(state!=='playing'||!g)return;const p=g.p;
  p.walkT=p.moving?p.walkT+dt*3:0;p.dashFx=Math.max(0,(p.dashFx||0)-dt*4);
  if(g.time>=240&&!g.bossSpawned){g.bossSpawned=true;const bk=BOSS_KEYS[(Math.random()*BOSS_KEYS.length)|0];spawn(true,bk);show('bossbar');setBossBar(bk);toast(`경고 · ${BOSS_INFO[bk].title}, ${BOSS_INFO[bk].name} 출현`);g.shake=3.4;g.shx=0;g.shy=0;g.flashW=.35;g.dmgFlash=.4;g.siren={n:9,t:.15};noise(1.6,.4)}
  if(!g.testBoss){g.spawn-=dt;if(g.spawn<=0){const count=1+Math.floor(g.time/85);for(let i=0;i<count&&g.enemies.length<g.cap;i++)spawn();g.spawn=Math.max(.46,1.30-g.time/430)}}
- for(const w of g.weapons){w.cd-=dt;if(w.cd<=0){if(g.floatT>0){w.cd=.06}else{shoot(w);w.cd=TOA[w.id].rate*cdMul()}}}
+ if(g.awaken==='gali'){if((g.jetCd||0)>0){g.jetCd=Math.max(0,g.jetCd-dt*(zoneAt(g.p.x,g.p.y,0)?2:1));if(g.jetCd===0){toast('워터 젯 준비 완료');beep(620,.1)}}if(g.jetMode){g.jetTime=(g.jetTime||0)-dt;if(g.jetTime<=0){g.jetTime=0;g.jetMode=false;g.jet=null;toast('워터 젯 종료')}}}if(g.awaken==='gali'&&g.jetMode){const tg=nearest();
+  if(tg){const p=g.p,st=wStats(),mm=st.mm||0,jw=30+6*mm,ang=Math.atan2(tg.y-p.y,tg.x-p.x),L=Math.hypot(tg.x-p.x,tg.y-p.y);
+   g.jet={x1:p.x,y1:p.y,x2:tg.x,y2:tg.y,w:jw,ang,L};g.jetTick=(g.jetTick||0)-dt;
+   if(g.jetTick<=0){g.jetTick=.22;const dps=basicDmg()*1.6*(1+.25*mm)*(zoneAt(g.p.x,g.p.y,1)?1.4:1);
+    hit(tg,dps*.22,0,{color:'#7fd4ff',angle:ang});
+    const ca=Math.cos(ang),sa=Math.sin(ang);
+    for(const o of g.enemies){if(o===tg||o.dead||o.charm>0)continue;
+     const dx=o.x-p.x,dy=o.y-p.y,tp=dx*ca+dy*sa;if(tp<0||tp>L)continue;
+     if(Math.abs(-sa*dx+ca*dy)<jw/2+o.r*.6)hit(o,dps*.5*.22,0,{color:'#7fd4ff',angle:Math.atan2(o.y-p.y,o.x-p.x)})}
+    if(Math.random()<.7)fx(tg.x,tg.y,16,'#7fe0ff','spark')}}
+  else g.jet=null}
+ else g.jet=null;
+ for(const w of g.weapons){w.cd-=dt;if(w.cd<=0){if(g.jetMode||g.floatT>0){w.cd=.06}else{shoot(w);w.cd=TOA[w.id].rate*cdMul()}}}
  if(g.clone&&g.clone.hp>0){const c=g.clone;c.cd-=dt;
   c.invisT=Math.max(0,(c.invisT||0)-dt);c.xrayT=Math.max(0,(c.xrayT||0)-dt);
   if(c.cd<=0){c.cd=TOA[selected].rate*cdMul();if(selected===4)cloneShock(c);else{const tg=nearest();if(tg){const a2=Math.atan2(tg.y-c.y,tg.x-c.x);
    const cdmg=TOA[selected].damage*wStats().dmg;
    g.shots.push({x:c.x,y:c.y,vx:Math.cos(a2)*400,vy:Math.sin(a2)*400,id:selected,r:9,damage:cdmg,ttl:1.6,pierce:1,hit:new Set(),dead:false,angle:a2,cloneShot:true,
-    burn:selected===0?cdmg*.5:0,splash:selected===1?cdmg*.25:0,splashR:80,slow:selected===3?.5:0,bounce:selected===5?1:0})}}}}
+    burn:selected===0?cdmg*.5:0,splash:selected===1?cdmg*.25:0,splashR:160,slow:selected===3?.5:0,bounce:selected===5?1:0})}}}}
  const grid=new Map(),tgt=(g.clone&&g.clone.hp>0)?g.clone:p;
  for(const e of g.enemies){if(e.dead)continue;
   e.slow=Math.max(0,e.slow-dt);e.flash=Math.max(0,e.flash-dt);e.squash=Math.max(0,(e.squash||0)-dt*5.5);
@@ -1431,7 +1443,7 @@ function tick(dt){if(state!=='playing'||!g)return;const p=g.p;
    if(s.dead||e.dead||e.charm>0||s.hit.has(e.id)||dist(e,s)>e.r+s.r)continue;s.hit.add(e.id);
    hit(e,s.damage,s.slow||0,{color:TOA[s.id===6?3:s.id].color,angle:s.angle,basic:!!s.basic&&!s.cloneShot});
    if(s.burn&&!e.dead)e.burn={t:1,dmg:s.burn};
-   if(s.splash){let n2=0;for(const o of g.enemies){if(n2>=3)break;if(o===e||o.dead||o.charm>0||dist(o,e)>s.splashR)continue;n2++;hit(o,s.splash,0,{color:'#7fe0ff',angle:Math.atan2(o.y-e.y,o.x-e.x)});fx(o.x,o.y,26,'#7fe0ff')}}
+   if(s.splash){fx(e.x,e.y,s.splashR,'#7fe0ff');let n2=0;for(const o of g.enemies){if(n2>=3)break;if(o===e||o.dead||o.charm>0||dist(o,e)>s.splashR)continue;n2++;hit(o,s.splash,0,{color:'#7fe0ff',angle:Math.atan2(o.y-e.y,o.x-e.x)});fx(o.x,o.y,52,'#7fe0ff')}}
    if(s.bounce>0&&!s.bounced){s.bounced=true;let cx=e.x,cy=e.y;const seen=new Set([e.id]);
     for(let nb=0;nb<s.bounce;nb++){let best=null,bd3=250;
      for(const o of g.enemies){if(o.dead||o.charm>0||seen.has(o.id))continue;const dd=Math.hypot(o.x-cx,o.y-cy);if(dd<bd3){bd3=dd;best=o}}
@@ -1473,7 +1485,7 @@ function updateHUD(){if(!g)return;const p=g.p;
  const wt=$('wetTag'),wi=wetInfo(p.x,p.y),kau=(g.masks.kaukau||0)>0;
  if(wi){wt.classList.remove('hidden');wt.textContent=kau?'카우카우 · 수중 가속':'늪지 · 이동 -45%';wt.classList.toggle('ok',kau)}
  else wt.classList.add('hidden');
- renderAbilityBar();renderMaskBar();
+ if(g.awaken==='gali'){const jt=$('jetTag');if(g.jetMode||(g.jetCd||0)>0){jt.classList.remove('hidden');jt.textContent=g.jetMode?('워터 젯 · '+Math.max(0,g.jetTime).toFixed(1)+'초'):('워터 젯 대기 · '+Math.ceil(g.jetCd)+'초');jt.classList.toggle('ok',!!g.jetMode)}else jt.classList.add('hidden')}renderAbilityBar();renderMaskBar();
 }
 function renderAbilityBar(){
  const bar=$('abilityBar');if(!bar)return;
@@ -1567,7 +1579,7 @@ function wetInfo(x,y){
  for(const p of list){if(p.type===2)continue;if(poolWet(p,x,y))return p}
  return null;
 }
-function wetAt(x,y){return !!wetInfo(x,y)}
+function wetAt(x,y){return !!wetInfo(x,y)}function zoneAt(x,y,type){const list=POOL_GRID.get(Math.floor(x/POOL_CELL)+','+Math.floor(y/POOL_CELL));if(!list)return false;for(const p of list){if(p.type!==type)continue;if(poolWet(p,x,y))return true}return false}
 function lavaInfo(x,y){
  const list=POOL_GRID.get(Math.floor(x/POOL_CELL)+','+Math.floor(y/POOL_CELL));if(!list)return null;
  for(const p of list){if(p.type!==2)continue;if(poolWet(p,x,y))return p}
@@ -2134,7 +2146,13 @@ function render(){ctx.setTransform(DPR,0,0,DPR,0,0);ctx.clearRect(0,0,W,H);
   ctx.save();ctx.globalAlpha=.30;ctx.fillStyle='#c39a63';
   for(let k=1;k<=2;k++){const bx=x-Math.cos(r.angle)*k*11,by=y-Math.sin(r.angle)*k*11;
    ctx.beginPath();ctx.arc(bx,by,5-k,0,6.283);ctx.fill()}ctx.restore()}
- if(g.fires&&g.fires.length){const FT=fireTex();
+ if(g.jet&&g.awaken==='gali'){const j=g.jet,wob=Math.sin(performance.now()*.02)*j.w*.14,x1=sx(j.x1),y1=sy(j.y1),x2=sx(j.x2),y2=sy(j.y2),mx=(x1+x2)/2,my=(y1+y2)/2;
+ ctx.save();ctx.lineCap='round';
+ ctx.strokeStyle='rgba(104,204,231,.30)';ctx.lineWidth=j.w;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+ ctx.strokeStyle='rgba(140,225,255,.45)';ctx.lineWidth=j.w*.55;ctx.beginPath();ctx.moveTo(x1,y1);ctx.quadraticCurveTo(mx+wob,my-wob,x2,y2);ctx.stroke();
+ ctx.strokeStyle='rgba(235,252,255,.9)';ctx.lineWidth=Math.max(4,j.w*.2);ctx.beginPath();ctx.moveTo(x1,y1);ctx.quadraticCurveTo(mx-wob,my+wob,x2,y2);ctx.stroke();
+ ctx.restore()}
+if(g.fires&&g.fires.length){const FT=fireTex();
    for(const f of g.fires){const fx2=sx(f.x),fy2=sy(f.y);
    if(fx2<-100||fx2>W+100||fy2<-100||fy2>H+100)continue;
    const k=Math.max(0,f.life/f.max),fl=1+.09*Math.sin(g.time*12+f.seed*3),R=54*(.72+.42*k)*fl;
@@ -2225,7 +2243,7 @@ function frame(now){const raw=now-last,dt=Math.min(.04,raw/1000||0);last=now;
  if(g){const _wv=$('warnveil');if(_wv)_wv.style.opacity=state==='playing'&&g.siren&&g.siren.n>0?String((.48+.3*Math.sin(g.time*10)).toFixed(3)):'0';const c=$('combo');c.style.transform=`scale(${1+g.comboPop*.4})`;c.classList.toggle('hot',g.combo>=15);c.classList.toggle('max',g.combo>=30);const ratio=g.p.hp/g.p.maxHp,lv=$('lowhp');lv.style.opacity=state==='playing'&&ratio<.35?String(Math.min(.85,(1-ratio/.35)*(.6+Math.sin(g.time*7)*.18))):'0';$('dmgflash').style.opacity=String(Math.min(.5,g.dmgFlash*.45))}
  render();requestAnimationFrame(frame)}
 addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code))e.preventDefault();if(e.repeat)return;if(e.code==='KeyP'||e.code==='Escape'){if(state==='playing'||state==='paused')pause();else if(!$('sourceModal').classList.contains('hidden'))hide('sourceModal');return}if(e.code==='KeyZ'||e.code==='KeyX'||e.code==='KeyC'){useAbility(AK_KEYS.indexOf(e.code));return}
- if(e.code==='KeyV'){novaBlast();return}
+ if(e.code==='KeyV'){if(state==='playing'&&g&&g.awaken==='gali'){if(g.jetMode){toast('워터 젯 사용 중 · '+Math.ceil(g.jetTime)+'초 남음');beep(500,.08)}else if((g.jetCd||0)>0){toast('워터 젯 준비 중 · '+Math.ceil(g.jetCd)+'초');beep(300,.1)}else{g.jetMode=true;g.jetTime=10;g.jetCd=15;g.jet=null;g.jetTick=0;toast('워터 젯! · 10초간 물줄기 공격');beep(740,.14);beep(988,.2)}}else novaBlast();return}
  if(state==='upgrade'&&/^Digit[123]$/.test(e.code)){choose(Number(e.code.slice(-1))-1);return}keys.add(e.code);if(e.code==='Space')dash()});addEventListener('keyup',e=>keys.delete(e.code));addEventListener('blur',()=>{clearInput();if(state==='playing')pause()});document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='playing')pause()});
 const stick=$('stick');function moveStick(e){const rect=stick.getBoundingClientRect();const dx=e.clientX-rect.left-rect.width/2,dy=e.clientY-rect.top-rect.height/2,d=Math.hypot(dx,dy),k=Math.min(1,d/40);joy.x=d?dx/d*k:0;joy.y=d?dy/d*k:0;$('knob').style.transform=`translate(${joy.x*32}px,${joy.y*32}px)`}stick.addEventListener('pointerdown',e=>{if(state!=='playing'||joy.id!==null)return;joy.id=e.pointerId;stick.setPointerCapture(e.pointerId);moveStick(e)});stick.addEventListener('pointermove',e=>{if(e.pointerId===joy.id)moveStick(e)});for(const name of ['pointerup','pointercancel','lostpointercapture'])stick.addEventListener(name,e=>{if(e.pointerId===joy.id){joy.x=joy.y=0;joy.id=null;$('knob').style.transform='translate(0,0)'}});
 $('start').onclick=start;$('retry').onclick=start;$('return').onclick=menu;$('pause').onclick=pause;$('resume').onclick=pause;$('quit').onclick=menu;$('nova').addEventListener('pointerdown',ev=>{ev.preventDefault();ev.stopPropagation();novaBlast()},{passive:false});
