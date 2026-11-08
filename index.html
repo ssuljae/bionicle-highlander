@@ -892,6 +892,13 @@ button.primary,.primary,.act{background:linear-gradient(180deg,#e0aa54,#8a5a26)!
 .colorCell .skThumb{width:100%;height:62px;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .colorCell .skThumb img{max-width:100%;max-height:62px;image-rendering:pixelated}
 </style>
+<style id="mecha-ui10">
+#acctModal .acctCard{background:#fdf4dd!important}
+#acctModal .acctName{color:#1d1512!important}
+#acctModal .acctStat{color:#3d3025!important}
+#acctModal .acctStat b{color:#1d1512!important}
+#acctModal .acctBadge{background:#3f6b34!important;color:#f6ffe9!important}
+</style>
 </head>
 <body><script>try{if(document.fonts)document.fonts.load("900 20px Mulmaru")}catch(e){}</script>
 <canvas id="world" aria-label="바이오니클:하이랜더 게임 화면"></canvas>
@@ -3019,7 +3026,7 @@ function skinImg(i){var im=SKIN_IMGS[i];if(!im){im=SKIN_IMGS[i]=new Image();im.d
 function skinOwned(i){return !!(isLogged()&&ACC.data.skinOwned&&ACC.data.skinOwned[i])}
 function skinEquipped(i){return !!(isLogged()&&ACC.data.skinEq&&ACC.data.skinEq[i])}
 function HERO_SKIN_ACTIVE(i){return !!(skinEquipped(i)&&skinImg(i))}
-(function(){var _p=portraitSrc;portraitSrc=function(i){return (skinEquipped(i)&&SKIN_IMGS[i]&&SKIN_IMGS[i].complete&&SKIN_IMGS[i].naturalWidth)?SKIN_ART[i]:_p(i)}})();
+(function(){var _p=portraitSrc;portraitSrc=function(i){return (skinEquipped(i)&&SKIN_IMGS[i]&&SKIN_IMGS[i].complete&&SKIN_IMGS[i].naturalWidth)?SKIN_ART[i]:_p(i)}})();for(var _si=0;_si<6;_si++)skinImg(_si);
 function onSkinBase(i){if(!isLogged()){toast('게스트 모드: 스킨 해금은 로그인 후 가능합니다');return}
  SKIN_PREVIEW=null;if(ACC.data.skinEq)delete ACC.data.skinEq[i];
  persist();HERO_FROM=selected;HERO_CI=equippedColor(selected);renderCustom();refreshMenuArt();
@@ -3046,9 +3053,9 @@ function renderSkinUI(){
  var i=CUSTOM_TOA,eq=skinEquipped(i),has=skinOwned(i);
  var pv=!!(SKIN_PREVIEW&&SKIN_PREVIEW.i===i&&!eq&&!has);
  var art=$('customArt'),si=skinImg(i);
- art.src=(eq&&si)?SKIN_ART[i]:previewSrc(i);art.alt=SKIN_NAME[i]+' 미리보기';
+ art.src=((eq||pv)&&si)?SKIN_ART[i]:previewSrc(i);art.alt=SKIN_NAME[i]+' 미리보기';
  $('customPreview').className='customPreview'+(pv?' previewing':'');
- $('customName').textContent=TOA[i].name+' · '+TOA[i].element+(eq?' · '+SKIN_NAME[i]:'');
+ $('customName').textContent=TOA[i].name+' · '+TOA[i].element+((eq||pv)?' · '+SKIN_NAME[i]:'');
  var sl=$('skinLock');if(sl){sl.classList.toggle('hidden',isLogged());if(!isLogged())sl.textContent='미리보기'}
  var row=$('colorRow');row.style.gridTemplateColumns='repeat(auto-fit,minmax(150px,1fr))';row.replaceChildren();
  var base=document.createElement('button');base.type='button';
@@ -3067,7 +3074,8 @@ function renderSkinUI(){
  var note=$('customNote');
  note.textContent=!isLogged()?'게스트 모드: 스킨을 자유롭게 미리볼 수 있습니다. 해금과 저장은 로그인 후 가능합니다.'
   :'클래식 스킨은 메뉴 초상화와 게임 속 모습에 적용됩니다. 기본 셀을 누르면 해제됩니다. (보유 '+(ACC.data.kanoka||0)+' 카노카)';
- updateAccountBar()}
+ var _tb=$('customTabs').children[i];if(_tb){var _ti=_tb.querySelector('img');if(_ti&&_ti.src!==portraitSrc(i))_ti.src=portraitSrc(i)}
+  updateAccountBar()}
 (function(){
  var _orig=renderCustom;
  renderCustom=function(){
