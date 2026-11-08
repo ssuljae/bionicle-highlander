@@ -777,9 +777,9 @@ h1,h2,h3,h4,b,strong,.toa strong,.loadout,.coinChip,.customNote,
 <div id="bossbar" class="bossbar hidden"><span id="bossName">마쿠타의 수호자 · 카네라</span><div class="bar"><i id="bossfill"></i></div><div id="bossState" style="font-size:11px;color:#ffd9a0;margin-top:5px;text-shadow:0 1px 2px #000"></div></div>
 <div id="combo" class="combo hidden"><b id="comboNum">0</b><span>연속 타격</span></div>
 <div id="lowhp" class="lowhp"></div><div id="dmgflash" class="hitveil"></div><div id="warnveil" style="position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;background:radial-gradient(ellipse at center,#0000 30%,#a01212cc 100%)"></div>
-<div id="novaWrap" class="novaWrap hidden"><button id="nova" class="novaBtn" aria-label="노바 블래스트"><b>노바</b><span id="novaState">준비</span></button></div>
+<div id="novaWrap" class="novaWrap hidden"><button id="nova" class="novaBtn" aria-label="노바 블래스트"><b>노바</b><span id="novaState">준비</span></button></div><div id="jetWrap" class="novaWrap hidden" style="bottom:calc(324px + env(safe-area-inset-bottom,0px))"><button id="jetBtn" class="novaBtn" aria-label="워터 젯"><img id="jetIco" alt="" style="width:30px;height:30px;image-rendering:pixelated"><b>워터젯</b><span id="jetState">준비</span></button></div>
 <div id="abilityBar" class="abilityBar hidden"></div>
-<div id="wetTag" class="wetTag hidden">늪지 · 이동 -45%</div><div id="jetTag" class="wetTag hidden" style="bottom:316px;font-size:12px">워터 젯</div>
+<div id="wetTag" class="wetTag hidden">늪지 · 이동 -45%</div>
 <div id="toast" class="toast hidden"></div>
 <div id="touch" class="touch hidden"><div id="stick" class="stick" aria-label="이동 조이스틱"><i id="knob"></i></div><span class="hint">끌어서 이동</span><button id="dash" class="dash" aria-label="돌진"><img class="dIco" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAABIUlEQVR42mNgGAXDGbAKyfwnR44UwESqY7BZjE+OJg6qOPfhP67QwCdHDmAkxTG9LjoocsV7rjDgkvv97gkj1UMI3ffIDkBmY+OTG1JM+NIMzNdZOvwYFuOTo8RRjIRyzN0Xj+Hi0658RIkadDlqRB/WEEI2QFlCFi6epcOPEgroctQIKZxRNlCOwpuoB8JRBMshejuKqIKRno4iuuqgtqModhC9HMVEasFFqaOo7iBKC02qOohaJTi+kpuJ3o6hSi6jZ93GNJgcQ9BBA1HrMw0mx+B00KBuD8EsgtHIhR+6HDXa1oyktKmRLcRWDVCjoY83UXcYCTDishDdcmr1OogCFec+/GcVkkHBxMjRpF+GLaGj+x6f3JDv24+CUUApAACC/UBOPxzlxwAAAABJRU5ErkJggg=="><b id="dashNum">1</b></button></div>
 <section id="upgradeModal" class="modal hidden"><div class="modalbox"><div class="eyebrow">원소의 힘이 깨어납니다</div><h2 id="upTitle">성장 선택</h2><p class="muted">하나를 선택하세요. 선택하는 동안 시간은 멈춥니다.</p><div id="upgradeCards" class="upgrades"></div><div class="muted" style="font-size:11px">키보드 1 · 2 · 3 으로도 선택할 수 있습니다.</div><button id="upStatus" class="ghost">현재 상태창 보기</button></div></section>
@@ -1044,7 +1044,7 @@ const MASKS=[
 
 const AWAKEN=[
  {id:'tahu',mask:'hau',name:'용암 서핑',desc:'돌진 횟수 +1 · 돌진 경로에 5초간 불길을 남깁니다. 불길에 닿은 적은 이동 -50%와 매번 기본 피해 150%를 받습니다.',bind:g=>{g.p.dashMax+=1;g.p.dashCharges=g.p.dashMax}},
- {id:'gali',mask:'kaukau',name:'워터 젯',desc:'[V] 10초간 가장 가까운 적에게 일직선 물줄기를 쏴 지속 피해(초당 기본 피해의 160%)를 줍니다. 쿨타임 15초. 줄기에 닿은 중간 적은 절반의 지속 피해를 받고, 기본기 숙련마다 줄기가 두꺼워지고 피해가 증가합니다. 물웅덩이 위에선 쿨타임이 50% 감소하고, 늪지대 위에선 피해량이 40% 증가합니다. 기본 공격의 물의 파동은 이펙트와 범위가 2배입니다.',bind:g=>{}},
+ {id:'gali',mask:'kaukau',name:'워터 젯',desc:'[V 또는 버튼] 10초간 가장 가까운 적에게 일직선 물줄기를 쏴 지속 피해(초당 기본 피해의 160%)를 줍니다. 쿨타임 15초. 줄기에 닿은 중간 적은 절반의 지속 피해를 받고, 기본기 숙련마다 줄기가 두꺼워지고 피해가 증가합니다. 물웅덩이나 늪지대 위에선 초당 피해 횟수가 2배, 피해량이 40% 증가합니다. 기본 공격의 물의 파동은 이펙트와 범위가 2배입니다.',bind:g=>{}},
  {id:'lewa',mask:'miru',name:'활강',desc:'마지막 돌진 후 2초간 부양합니다. 부양 중 피격·감속·기본공격 불가, 착지 시 기본 피해 2배 충격파. (쿨 12초)',bind:g=>{}},
  {id:'kopaka',mask:'akaku',name:'근접전투',desc:'적이 근접하면 가장 가까운 적을 추가로 근접 공격합니다(기본 피해 2배). 아카쿠 사용 중이면 근접한 모든 적을 공격합니다.',bind:g=>{}},
  {id:'onua',mask:'pakari',name:'붕괴',desc:'기본공격으로 적을 처치할 때마다 가장 가까운 적에게 바위를 떨어뜨려, 착탄 지점 주변에 기본 피해 3배를 줍니다.',bind:g=>{}},
@@ -1288,13 +1288,13 @@ function bossAI(e,dt,p){
  }
 }
 function bossTarakava(e,dt,p,rage,toP,d){
-  const sp=e.speed*(rage?1.35:1)*(e.slow>0?.42:1);
+  const sp=e.speed*.85*(rage?1.35:1)*(e.slow>0?.42:1);
   if(e.mode==='melee'){
     e.swingT-=dt;e.x+=Math.cos(toP)*sp*.15*dt;e.y+=Math.sin(toP)*sp*.15*dt;
     if(e.swingT<=0){
       e.swingT=.5;e.swings--;e.squash=.6;
       for(let k2=0;k2<5;k2++)fx(e.x+Math.cos(toP-1+.5*k2)*62,e.y+Math.sin(toP-1+.5*k2)*62,16,'#8fd0a8','spark');
-      if(d<e.r+78&&p.inv<=0&&g.invisT<=0){damagePlayer(Math.max(3,24-g.armor),e.x,e.y);const dd=dist(e,p)||1;p.x+=(p.x-e.x)/dd*14;p.y+=(p.y-e.y)/dd*14}
+      if(d<e.r+78&&p.inv<=0&&g.invisT<=0){damagePlayer(Math.max(3,Math.round((24-g.armor)*1.5)),e.x,e.y);const dd=dist(e,p)||1;p.x+=(p.x-e.x)/dd*14;p.y+=(p.y-e.y)/dd*14}
       addShake(1.6,0);noise(1.1,.6);
       if(e.swings<=0){e.mode='backflip';e.modeT=rage?.32:.42;e.dirx=-Math.cos(toP);e.diry=-Math.sin(toP);beep(150,.16)}
     }
@@ -1377,10 +1377,10 @@ function tick(dt){if(state!=='playing'||!g)return;const p=g.p;
  p.walkT=p.moving?p.walkT+dt*3:0;p.dashFx=Math.max(0,(p.dashFx||0)-dt*4);
  if(g.time>=240&&!g.bossSpawned){g.bossSpawned=true;const bk=BOSS_KEYS[(Math.random()*BOSS_KEYS.length)|0];spawn(true,bk);show('bossbar');setBossBar(bk);toast(`경고 · ${BOSS_INFO[bk].title}, ${BOSS_INFO[bk].name} 출현`);g.shake=3.4;g.shx=0;g.shy=0;g.flashW=.35;g.dmgFlash=.4;g.siren={n:9,t:.15};noise(1.6,.4)}
  if(!g.testBoss){g.spawn-=dt;if(g.spawn<=0){const count=1+Math.floor(g.time/85);for(let i=0;i<count&&g.enemies.length<g.cap;i++)spawn();g.spawn=Math.max(.46,1.30-g.time/430)}}
- if(g.awaken==='gali'){if((g.jetCd||0)>0){g.jetCd=Math.max(0,g.jetCd-dt*(zoneAt(g.p.x,g.p.y,0)?2:1));if(g.jetCd===0){toast('워터 젯 준비 완료');beep(620,.1)}}if(g.jetMode){g.jetTime=(g.jetTime||0)-dt;if(g.jetTime<=0){g.jetTime=0;g.jetMode=false;g.jet=null;toast('워터 젯 종료')}}}if(g.awaken==='gali'&&g.jetMode){const tg=nearest();
+ if(g.awaken==='gali'){if((g.jetCd||0)>0){g.jetCd=Math.max(0,g.jetCd-dt);if(g.jetCd===0){toast('워터 젯 준비 완료');beep(620,.1)}}if(g.jetMode){g.jetTime=(g.jetTime||0)-dt;if(g.jetTime<=0){g.jetTime=0;g.jetMode=false;g.jet=null;toast('워터 젯 종료')}}}if(g.awaken==='gali'&&g.jetMode){const tg=nearest();
   if(tg){const p=g.p,st=wStats(),mm=st.mm||0,jw=30+6*mm,ang=Math.atan2(tg.y-p.y,tg.x-p.x),L=Math.hypot(tg.x-p.x,tg.y-p.y);
    g.jet={x1:p.x,y1:p.y,x2:tg.x,y2:tg.y,w:jw,ang,L};g.jetTick=(g.jetTick||0)-dt;
-   if(g.jetTick<=0){g.jetTick=.22;const dps=basicDmg()*1.6*(1+.25*mm)*(zoneAt(g.p.x,g.p.y,1)?1.4:1);
+   if(g.jetTick<=0){const wz=zoneAt(g.p.x,g.p.y,0)||zoneAt(g.p.x,g.p.y,1);g.jetTick=(wz?.11:.22);const dps=basicDmg()*1.6*(1+.25*mm)*(wz?1.4:1);
     hit(tg,dps*.22,0,{color:'#7fd4ff',angle:ang});
     const ca=Math.cos(ang),sa=Math.sin(ang);
     for(const o of g.enemies){if(o===tg||o.dead||o.charm>0)continue;
@@ -1485,7 +1485,7 @@ function updateHUD(){if(!g)return;const p=g.p;
  const wt=$('wetTag'),wi=wetInfo(p.x,p.y),kau=(g.masks.kaukau||0)>0;
  if(wi){wt.classList.remove('hidden');wt.textContent=kau?'카우카우 · 수중 가속':'늪지 · 이동 -45%';wt.classList.toggle('ok',kau)}
  else wt.classList.add('hidden');
- if(g.awaken==='gali'){const jt=$('jetTag');if(g.jetMode||(g.jetCd||0)>0){jt.classList.remove('hidden');jt.textContent=g.jetMode?('워터 젯 · '+Math.max(0,g.jetTime).toFixed(1)+'초'):('워터 젯 대기 · '+Math.ceil(g.jetCd)+'초');jt.classList.toggle('ok',!!g.jetMode)}else jt.classList.add('hidden')}renderAbilityBar();renderMaskBar();
+ const jw2=document.getElementById('jetWrap');if(g.awaken==='gali'){jw2.classList.remove('hidden');const ji=document.getElementById('jetIco');if(!ji.getAttribute('src'))ji.src=GOLD_ART.kaukau;document.getElementById('jetState').textContent=g.jetMode?Math.max(0,g.jetTime).toFixed(1)+'초':((g.jetCd||0)>0?Math.ceil(g.jetCd)+'초':'준비');document.getElementById('jetBtn').classList.toggle('cool',(g.jetCd||0)>0&&!g.jetMode);document.getElementById('jetBtn').classList.toggle('ready',(g.jetCd||0)<=0&&!g.jetMode)}else jw2.classList.add('hidden');renderAbilityBar();renderMaskBar();
 }
 function renderAbilityBar(){
  const bar=$('abilityBar');if(!bar)return;
@@ -2244,7 +2244,7 @@ function frame(now){const raw=now-last,dt=Math.min(.04,raw/1000||0);last=now;
  render();requestAnimationFrame(frame)}
 addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code))e.preventDefault();if(e.repeat)return;if(e.code==='KeyP'||e.code==='Escape'){if(state==='playing'||state==='paused')pause();else if(!$('sourceModal').classList.contains('hidden'))hide('sourceModal');return}if(e.code==='KeyZ'||e.code==='KeyX'||e.code==='KeyC'){useAbility(AK_KEYS.indexOf(e.code));return}
  if(e.code==='KeyV'){if(state==='playing'&&g&&g.awaken==='gali'){if(g.jetMode){toast('워터 젯 사용 중 · '+Math.ceil(g.jetTime)+'초 남음');beep(500,.08)}else if((g.jetCd||0)>0){toast('워터 젯 준비 중 · '+Math.ceil(g.jetCd)+'초');beep(300,.1)}else{g.jetMode=true;g.jetTime=10;g.jetCd=15;g.jet=null;g.jetTick=0;toast('워터 젯! · 10초간 물줄기 공격');beep(740,.14);beep(988,.2)}}else novaBlast();return}
- if(state==='upgrade'&&/^Digit[123]$/.test(e.code)){choose(Number(e.code.slice(-1))-1);return}keys.add(e.code);if(e.code==='Space')dash()});addEventListener('keyup',e=>keys.delete(e.code));addEventListener('blur',()=>{clearInput();if(state==='playing')pause()});document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='playing')pause()});
+ if(state==='upgrade'&&/^Digit[123]$/.test(e.code)){choose(Number(e.code.slice(-1))-1);return}keys.add(e.code);if(e.code==='Space')dash()});document.getElementById('jetBtn').addEventListener('click',e=>{e.currentTarget.blur();if(state==='playing'&&g&&g.awaken==='gali'){if(g.jetMode){toast('워터 젯 사용 중 · '+Math.ceil(g.jetTime)+'초 남음');beep(500,.08)}else if((g.jetCd||0)>0){toast('워터 젯 준비 중 · '+Math.ceil(g.jetCd)+'초');beep(300,.1)}else{g.jetMode=true;g.jetTime=10;g.jetCd=15;g.jet=null;g.jetTick=0;toast('워터 젯! · 10초간 물줄기 공격');beep(740,.14);beep(988,.2)}}});addEventListener('keyup',e=>keys.delete(e.code));addEventListener('blur',()=>{clearInput();if(state==='playing')pause()});document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='playing')pause()});
 const stick=$('stick');function moveStick(e){const rect=stick.getBoundingClientRect();const dx=e.clientX-rect.left-rect.width/2,dy=e.clientY-rect.top-rect.height/2,d=Math.hypot(dx,dy),k=Math.min(1,d/40);joy.x=d?dx/d*k:0;joy.y=d?dy/d*k:0;$('knob').style.transform=`translate(${joy.x*32}px,${joy.y*32}px)`}stick.addEventListener('pointerdown',e=>{if(state!=='playing'||joy.id!==null)return;joy.id=e.pointerId;stick.setPointerCapture(e.pointerId);moveStick(e)});stick.addEventListener('pointermove',e=>{if(e.pointerId===joy.id)moveStick(e)});for(const name of ['pointerup','pointercancel','lostpointercapture'])stick.addEventListener(name,e=>{if(e.pointerId===joy.id){joy.x=joy.y=0;joy.id=null;$('knob').style.transform='translate(0,0)'}});
 $('start').onclick=start;$('retry').onclick=start;$('return').onclick=menu;$('pause').onclick=pause;$('resume').onclick=pause;$('quit').onclick=menu;$('nova').addEventListener('pointerdown',ev=>{ev.preventDefault();ev.stopPropagation();novaBlast()},{passive:false});
  const dashBtn=$('dash');
