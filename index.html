@@ -797,6 +797,77 @@ button.primary,.primary,.act{background:linear-gradient(180deg,#e0aa54,#8a5a26)!
 .hpbar,.energybar,.shieldbar,.xpbar{background:#0a1416!important;border:1px solid #0e1719!important;border-radius:999px!important;box-shadow:inset 0 2px 6px #000c!important}
 .stick{border:2px solid var(--brass)!important;box-shadow:0 0 0 2px #0e1719,inset 0 2px 0 #ffffff22!important}
 ::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:#0a1416}::-webkit-scrollbar-thumb{background:linear-gradient(#4d6065,#28343a);border-radius:5px;border:1px solid #0e1719}</style>
+<style id="mecha-ui2">
+.modal{background:
+ radial-gradient(1100px 640px at 50% -6%,#12374245,transparent 70%),
+ repeating-linear-gradient(0deg,#16444d30 0 1px,transparent 1px 28px),
+ repeating-linear-gradient(90deg,#16444d30 0 1px,transparent 1px 28px),
+ linear-gradient(165deg,#0b2027f2,#060d12f8)!important}
+.modalbox,.modalbox.parchment{background:
+ radial-gradient(circle at 16px 16px,#9db3b6 0 2.5px,transparent 3.5px),
+ radial-gradient(circle at calc(100% - 16px) 16px,#9db3b6 0 2.5px,transparent 3.5px),
+ radial-gradient(circle at 16px calc(100% - 16px),#9db3b6 0 2.5px,transparent 3.5px),
+ radial-gradient(circle at calc(100% - 16px) calc(100% - 16px),#9db3b6 0 2.5px,transparent 3.5px),
+ linear-gradient(180deg,#33454a,#1b2629)!important;border:2px solid #0e1719!important;border-radius:10px!important;color:#e8e2d0!important;box-shadow:inset 0 2px 0 #ffffff1f,inset 0 -3px 0 #00000066,0 18px 50px #000c!important}
+.modalbox.parchment::after,.modalbox::before{display:none!important}
+.modalHead{background:linear-gradient(180deg,#43565b,#28343a)!important;border:2px solid #0e1719!important;border-radius:6px!important;padding:10px 14px!important;box-shadow:inset 0 2px 0 #ffffff24,0 4px 12px #0009!important}
+.modalHead h2,.modalbox h2,.modalbox h3,.modalbox h4{color:var(--mint)!important;text-shadow:0 0 12px #37ffb355,0 2px 0 #062018!important}
+.modalHead button,.xclose,.modal .ghost{background:linear-gradient(180deg,#4d6065,#28343a)!important;color:#d7ece4!important;border:1px solid #0e1719!important;border-radius:999px!important;box-shadow:inset 0 2px 0 #ffffff26,0 3px 8px #0009!important}
+.xclose{background:linear-gradient(#d05038,#8a2a1c)!important;color:#ffe0d6!important}
+.modal .primary{background:linear-gradient(180deg,#e0aa54,#8a5a26)!important;color:#2b1704!important;border:2px solid #4a2e10!important;border-radius:999px!important;box-shadow:inset 0 3px 0 #f7d79a,0 6px 16px #000a!important;text-shadow:0 1px 0 #f7d79a55!important}
+.modal .modalbox p,.modal .modalbox .muted,.customNote,.upgrade p,.scrollTip,.buyBar .buyTxt,#acctForm label,.acctPanel>label,.statRow>span,.statDesc,.maskLine .mt small,.runGrid span,.runEmpty,.acctFoot .tiny,.acctStat,.modalbox .tiny,.sources,.statusline{color:#d9e4d8!important}
+.upgrade strong,.colorCell b,.slot b,#endText,#endKills,#endLevel,#endTime,.acctName{color:#f2ead2!important}
+.runGrid span b,.acctStat b{color:#ffffff!important}
+.eyebrow,.modal .eyebrow,.upgrade .num,.statSec>h3,.runSum>h4,.buyBar .buyTxt b,.coinChip,.lvChip,.maskLine .mt b{color:var(--brass-hi)!important}
+.meta,.foot,.touch .hint,#menu .select-hint,#bossTestRow span{color:#cfe3d6!important}
+.foot button{color:#e6f2e6!important}
+.novaBtn.cool,.novaBtn.cool span,.abtn.cool b,.abtn i{color:#b9cfe0!important}
+.combo.max b{color:#ffb59a!important}
+.acctMsg{color:#ffb3a8!important}.acctMsg.ok{color:#9fe8a8!important}
+.acctWarn,.acctLock,.colorCell .tagLock,.colorCell .tagPrev{color:#ffb08a!important}
+.colorCell .tagOn{color:#9fe8a8!important}.colorCell .tagPrice{color:#ffd27a!important}
+.acctTabs button,.customTabs button{background:linear-gradient(180deg,#4d6065,#28343a)!important;color:#d7ece4!important;border:1px solid #0e1719!important;border-radius:999px!important;box-shadow:inset 0 2px 0 #ffffff26,0 3px 8px #0009!important}
+.acctTabs button.on,.customTabs button.on{background:linear-gradient(180deg,#e0aa54,#8a5a26)!important;color:#2b1704!important;border:2px solid #4a2e10!important;text-shadow:0 1px 0 #f7d79a55!important}
+.slot,.colorCell{background:linear-gradient(180deg,#3c4e53,#202b2f)!important;border:2px solid #0e1719!important;border-radius:8px!important;color:#d7ece4!important;box-shadow:inset 0 2px 0 #ffffff22,0 4px 10px #0009!important}
+.slot.active{box-shadow:0 0 0 2px var(--brass),0 0 18px #c9973f66!important}
+.colorCell.on{box-shadow:0 0 0 2px var(--brass),0 0 18px #c9973f66!important}
+.slot.locked{background:linear-gradient(180deg,#2a383d,#161f22)!important;color:#9ab0a4!important}
+.statSec{background:linear-gradient(180deg,#2c3f44,#16232a)!important;border:2px solid #0e1719!important;border-radius:6px!important;color:#e8e2d0!important;box-shadow:inset 0 2px 8px #000c!important}
+.lvChip{background:linear-gradient(180deg,#e0aa54,#8a5a26)!important;color:#2b1704!important;border:1px solid #4a2e10!important}
+.runChip{background:#2c3f44!important;border:1px solid #0e1719!important;color:#d9e4d8!important}
+.runChip.aw{background:linear-gradient(180deg,#e0aa54,#8a5a26)!important;color:#2b1704!important}
+.runChip.sk{background:#1e3a2a!important;color:#b9e8c0!important}
+.runChip i{color:#ffd27a!important}
+.buyBar{background:linear-gradient(180deg,#2c3f44,#16232a)!important;border:2px solid #0e1719!important;border-radius:6px!important}
+.acctActs button{background:linear-gradient(180deg,#4d6065,#28343a)!important;color:#d7ece4!important;border:1px solid #0e1719!important;border-radius:999px!important}
+.acctActs button.danger{background:linear-gradient(#d05038,#8a2a1c)!important;color:#ffe0d6!important}
+.acctMore button{background:linear-gradient(180deg,#e0aa54,#8a5a26)!important;color:#2b1704!important;border-radius:999px!important;border:2px solid #4a2e10!important}
+.modalbox input{background:#0a1416!important;border:2px solid #0e1719!important;color:#f2ead2!important;border-radius:6px!important;padding:10px 12px!important;box-shadow:inset 0 2px 8px #000c!important}
+.modalbox input::placeholder{color:#8ba396!important}
+.modalbox a{color:#8ff0cf!important}
+.upgrade{background:linear-gradient(180deg,#3c4e53,#202b2f)!important;border:2px solid #0e1719!important;border-radius:8px!important;box-shadow:inset 0 2px 0 #ffffff22,0 4px 10px #0009!important}
+.upgrade:hover{box-shadow:0 0 0 2px var(--brass),0 0 18px #c9973f66,0 8px 20px #000a!important}
+#endModal .modalbox{box-shadow:inset 0 0 0 2px #c0343f88,0 18px 50px #000c!important}
+#endModal.won .modalbox{box-shadow:inset 0 0 0 2px #e8c078aa,0 18px 50px #000c!important}
+#endTag{color:#ffb3c0!important}#endModal.won #endTag{color:var(--brass-hi)!important}
+#endScore{color:var(--mint)!important;text-shadow:0 0 14px #37ffb366!important}
+#endTitle{color:var(--mint)!important;text-shadow:0 0 12px #37ffb355,0 2px 0 #062018!important}</style>
+
+<style id="mecha-ui3">
+.result-grid small,.colorCell small{color:#c9d8cc!important;font-weight:800!important}
+.result-grid div{background:linear-gradient(180deg,#2c3f44,#16232a)!important;border:2px solid #0e1719!important;border-radius:6px!important;box-shadow:inset 0 2px 8px #000c!important}
+.slot.locked b{color:#c9d8cc!important}
+.slot.locked .slotIcon{color:#c9d8cc!important}
+.sources .tiny,.modalbox .tiny{color:#b9cfc0!important}
+</style>
+<style id="mecha-ui4">
+.runSum{background:linear-gradient(180deg,#2c3f44,#16232a)!important;border:2px solid #0e1719!important;border-radius:6px!important;box-shadow:inset 0 2px 8px #000c!important;padding:10px 12px!important}
+.runSum h4{color:var(--brass-hi)!important;text-shadow:0 0 8px #c9973f44!important}
+</style>
+<style id="mecha-ui5">
+.coinChip{background:linear-gradient(180deg,#2c3f44,#16232a)!important;border:2px solid #4a2e10!important;color:#ffd27a!important;border-radius:999px!important;box-shadow:inset 0 2px 6px #000c,0 0 0 1px #0e1719!important;text-shadow:0 1px 0 #00000088!important}
+.coinChip::before{box-shadow:0 0 0 2px #0e1719 inset!important}
+</style>
 </head>
 <body><script>try{if(document.fonts)document.fonts.load("900 20px Mulmaru")}catch(e){}</script>
 <canvas id="world" aria-label="바이오니클:하이랜더 게임 화면"></canvas>
