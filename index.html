@@ -1044,9 +1044,9 @@ const MASKS=[
 
 const AWAKEN=[
  {id:'tahu',mask:'hau',name:'용암 서핑',desc:'돌진 횟수 +1 · 돌진 경로에 5초간 불길을 남깁니다. 불길에 닿은 적은 이동 -50%와 매번 기본 피해 150%를 받습니다.',bind:g=>{g.p.dashMax+=1;g.p.dashCharges=g.p.dashMax}},
- {id:'gali',mask:'kaukau',name:'워터 젯',desc:'[V 또는 버튼] 10초간 가장 가까운 적에게 일직선 물줄기를 쏴 지속 피해(초당 기본 피해의 160%)를 줍니다. 쿨타임 15초. 줄기에 닿은 중간 적은 절반의 지속 피해를 받고, 기본기 숙련마다 줄기가 두꺼워지고 피해가 증가합니다. 물웅덩이나 늪지대 위에선 초당 피해 횟수가 2배, 피해량이 120% 증가합니다. 기본 공격의 물의 파동은 이펙트와 범위가 2배입니다.',bind:g=>{}},
+ {id:'gali',mask:'kaukau',name:'워터 젯',desc:'[V 또는 버튼] 10초간 가장 가까운 적에게 일직선 물줄기를 쏴 지속 피해(초당 기본 피해의 480%)를 줍니다. 쿨타임 15초. 줄기에 닿은 중간 적은 절반의 지속 피해를 받고, 기본기 숙련마다 줄기가 두꺼워지고 피해가 증가합니다. 물웅덩이나 늪지대 위에선 초당 피해 횟수가 2배, 피해량이 120% 증가합니다. 기본 공격의 물의 파동은 이펙트와 범위가 2배입니다.',bind:g=>{}},
  {id:'lewa',mask:'miru',name:'활강',desc:'마지막 돌진 후 2초간 부양합니다. 부양 중 피격·감속·기본공격 불가, 착지 시 기본 피해 2배 충격파. (쿨 12초)',bind:g=>{}},
- {id:'kopaka',mask:'akaku',name:'근접전투',desc:'적이 근접하면 가장 가까운 적을 추가로 근접 공격합니다(기본 피해 2배). 아카쿠 사용 중이면 근접한 모든 적을 공격합니다.',bind:g=>{}},
+ {id:'kopaka',mask:'akaku',name:'근접전투',desc:'적이 근접하면 가장 가까운 적을 추가로 근접 공격합니다(기본 피해 4배). 아카쿠 사용 중이면 근접한 모든 적을 공격합니다.',bind:g=>{}},
  {id:'onua',mask:'pakari',name:'붕괴',desc:'기본공격으로 적을 처치할 때마다 가장 가까운 적에게 바위를 떨어뜨려, 착탄 지점 주변에 기본 피해 3배를 줍니다.',bind:g=>{}},
  {id:'pohatu',mask:'kakama',name:'신속',desc:'기본공격 쿨타임을 제외한 모든 쿨타임이 2배 빠르게 감소합니다.',bind:g=>{}},
 ];
@@ -1236,7 +1236,7 @@ function rockBlast(r,e0){
  if(e0&&!e0.dead)fx(e0.x,e0.y,34,'#efe6ff','spark');
 }
 function kopakaMelee(){
- const p=g.p,dm=basicDmg()*2,R=g.xrayT>0?152:122;
+ const p=g.p,dm=basicDmg()*4,R=g.xrayT>0?152:122;
  const arr=g.enemies.filter(e=>!e.dead&&!(e.charm>0)&&Math.hypot(e.x-p.x,e.y-p.y)<R+e.r);
  if(!arr.length){g.recoil=.06;return}
  let list;
@@ -1380,7 +1380,7 @@ function tick(dt){if(state!=='playing'||!g)return;const p=g.p;
  if(g.awaken==='gali'){if((g.jetCd||0)>0){g.jetCd=Math.max(0,g.jetCd-dt);if(g.jetCd===0){toast('워터 젯 준비 완료');beep(620,.1)}}if(g.jetMode){g.jetTime=(g.jetTime||0)-dt;if(g.jetTime<=0){g.jetTime=0;g.jetMode=false;g.jet=null;toast('워터 젯 종료')}}}if(g.awaken==='gali'&&g.jetMode){const tg=nearest();
   if(tg){const p=g.p,st=wStats(),mm=st.mm||0,jw=30+6*mm,ang=Math.atan2(tg.y-p.y,tg.x-p.x),L=Math.hypot(tg.x-p.x,tg.y-p.y);
    g.jet={x1:p.x,y1:p.y,x2:tg.x,y2:tg.y,w:jw,ang,L};g.jetTick=(g.jetTick||0)-dt;
-   if(g.jetTick<=0){const wz=zoneAt(g.p.x,g.p.y,0)||zoneAt(g.p.x,g.p.y,1);g.jetTick=(wz?.11:.22);const dps=basicDmg()*1.6*(1+.25*mm)*(wz?2.2:1);
+   if(g.jetTick<=0){const wz=zoneAt(g.p.x,g.p.y,0)||zoneAt(g.p.x,g.p.y,1);g.jetTick=(wz?.11:.22);const dps=basicDmg()*4.8*(1+.25*mm)*(wz?2.2:1);
     hit(tg,dps*.22,0,{color:'#7fd4ff',angle:ang});
     const ca=Math.cos(ang),sa=Math.sin(ang);
     for(const o of g.enemies){if(o===tg||o.dead||o.charm>0)continue;
@@ -2880,7 +2880,6 @@ loadSprites();
 requestAnimationFrame(frame);
 })();
 </script>
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","spa":2}' crossorigin="anonymous"></script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
