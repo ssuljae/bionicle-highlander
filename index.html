@@ -1167,7 +1167,7 @@ function buildRunSummary(){
     +'</div>';
   box.innerHTML=h;box.scrollTop=0;
 }
-function finish(win){state='ended';$('endModal').classList.toggle('won',!!win);hide('touch');hide('upgradeModal');hide('bossbar');show('endModal');$('endTag').textContent=win?'섬에 다시 빛이 돌아옵니다':'다시, 원소의 힘을 모으세요';$('endTitle').textContent=win?'마타 누이를 지켜냈습니다':'수호자의 도전은 계속됩니다';$('endText').textContent=win?'보스를 쓰러뜨리고 마지막 공세를 버텼습니다.':g.time>=300?'시간 내 보스를 쓰러뜨리지 못했습니다. 다음에는 화력을 집중해 보세요.':'라히에게 포위되었습니다. 돌진으로 틈을 만들고 빛의 돌을 모아 보세요.';$('endTime').textContent=timeFmt(g.time);$('endScore').textContent=g.score;$('endKills').textContent=g.kills;$('endLevel').textContent=g.level;if(typeof buildRunSummary==='function')buildRunSummary();if(typeof saveRunResult==='function')saveRunResult(g.score,{toa:g.selected,win:!!win,kills:g.kills,time:g.time,level:g.level});let best=g.score;try{best=Math.max(Number(localStorage.getItem('mata-nui-best'))||0,g.score);localStorage.setItem('mata-nui-best',String(best));$('record').textContent=`이 브라우저 최고 점수: ${best}점`}catch{$('record').textContent='기록 저장이 차단되어 이번 결과만 표시합니다.'}clearInput()}
+function finish(win){state='ended';g.runToa=selected;$('endModal').classList.toggle('won',!!win);hide('touch');hide('upgradeModal');hide('bossbar');show('endModal');$('endTag').textContent=win?'섬에 다시 빛이 돌아옵니다':'다시, 원소의 힘을 모으세요';$('endTitle').textContent=win?'마타 누이를 지켜냈습니다':'수호자의 도전은 계속됩니다';$('endText').textContent=win?'보스를 쓰러뜨리고 마지막 공세를 버텼습니다.':g.time>=300?'시간 내 보스를 쓰러뜨리지 못했습니다. 다음에는 화력을 집중해 보세요.':'라히에게 포위되었습니다. 돌진으로 틈을 만들고 빛의 돌을 모아 보세요.';$('endTime').textContent=timeFmt(g.time);$('endScore').textContent=g.score;$('endKills').textContent=g.kills;$('endLevel').textContent=g.level;if(typeof buildRunSummary==='function')buildRunSummary();if(typeof saveRunResult==='function')saveRunResult(g.score,{toa:g.runToa||0,win:!!win,kills:g.kills,time:g.time,level:g.level});let best=g.score;try{best=Math.max(Number(localStorage.getItem('mata-nui-best'))||0,g.score);localStorage.setItem('mata-nui-best',String(best));$('record').textContent=`이 브라우저 최고 점수: ${best}점`}catch{$('record').textContent='기록 저장이 차단되어 이번 결과만 표시합니다.'}clearInput()}
 const MASK_CD={huna:20,komau:15,mahiki:30,akaku:15};
 const AK_KEYS=['KeyZ','KeyX','KeyC'],AK_LABEL=['Z','X','C'];
 const cdOf=id=>{const a=g.abilities.find(x=>x.id===id);return a?a.cdMax:(MASK_CD[id]||0)};
@@ -2928,7 +2928,7 @@ function saveRunResult(score,meta){
  d.kills=(d.kills||0)+(meta.kills||0);
  d.time=(d.time||0)+(meta.time||0);
  d.toaBest=d.toaBest||{};d.toaPlays=d.toaPlays||{};
- const ti=meta.toa!=null?meta.toa:(typeof g==='object'&&g?g.selected:0);
+ const ti=meta.toa!=null?meta.toa:(typeof g==='object'&&g?(g.runToa!=null?g.runToa:0):0);
  const tk=TOA_KEYS[ti]||TOA_KEYS[0];
  d.toaBest[tk]=Math.max(d.toaBest[tk]||0,score);
  d.toaPlays[tk]=(d.toaPlays[tk]||0)+1;
