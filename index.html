@@ -2567,17 +2567,13 @@ function renderAcct(){
  const d=ACC.data||blankData();
  const ses=sread();
  const left=ses?Math.max(0,Math.ceil((ses.exp-Date.now())/86400000)):0;
- const tp=d.toaPlays||{};
- let bk='',bv=0;
- for(const k of TOA_KEYS){const v=Number(tp[k]||0);if(v>bv){bv=v;bk=k}}
- const last=d.last;
+  const last=d.last;
  box.innerHTML='<div class="acctCard">'
   +'<div class="acctName">'+esc(ACC_NAME)+'<span class="acctBadge">로그인됨</span></div>'
   +'<div class="acctStat"><span>최고 점수</span><b>'+(d.best||0).toLocaleString()+'점</b></div>'
   +'<div class="acctStat"><span>보유 카노카</span><b>'+(d.kanoka||0).toLocaleString()+'</b></div>'
   +'<div class="acctStat"><span>플레이</span><b>'+(d.plays||0)+'판 · 클리어 '+(d.wins||0)+'회</b></div>'
-  +'<div class="acctStat"><span>주 토아</span><b>'+esc(bv>0?toaName(bk):'—')+'</b></div>'
-  +'<div class="acctStat"><span>마지막 판</span><b>'+(last?esc(last.score)+'점 · Lv'+esc(last.level||1):'—')+'</b></div>'
+  +   +'<div class="acctStat"><span>마지막 판</span><b>'+(last?esc(last.score)+'점 · Lv'+esc(last.level||1):'—')+'</b></div>'
   +'<div class="acctStat"><span>로그인 세션</span><b>'+(left>0?left+'일 남음':'만료')+'</b></div>'
   +'</div>'
   +'<div class="acctActs">'
