@@ -924,7 +924,9 @@ button.primary,.primary,.act{background:linear-gradient(180deg,#e0aa54,#8a5a26)!
 <section id="pauseModal" class="modal hidden"><div class="modalbox"><div class="eyebrow">잠시 숨을 고르세요</div><h2>일시정지</h2><p class="muted">WASD / 방향키 이동 · 스페이스 돌진<br>카노히 능력 Z / X / C · 노바 블래스트 V (모든 토아 기본 보유) — 이동 중에도 바로 사용<br>물웅덩이·늪지대 위에서는 이동이 느려집니다 (카노히 카우카우로 무시).<br>빛의 돌을 모아 성장하고, 4분에 등장하는 랜덤 보스(카네라·무아카·타라카바·마나스)를 쓰러뜨리세요.</p><div class="actions"><button id="resume" class="primary">계속하기</button><button id="statusBtn" class="ghost">상태창</button><button id="optBtn2" class="ghost">옵션</button><button id="quit" class="ghost">토아 선택으로</button></div></div></section>
 
 <section id="optModal" class="modal hidden"><div class="modalbox parchment"><div class="modalHead"><h2>옵션</h2><button class="xclose" id="optClose" aria-label="닫기">×</button></div><div class="optList"><button class="optRow" id="optMirror" role="switch" aria-checked="false"><span class="ol"><b>모바일 컨트롤 좌우반전</b><small id="optMirrorVal">조이스틱 왼쪽 · 돌진 오른쪽</small></span><span class="optSwitch"><i></i></span></button><button class="optRow" id="optShake"><span class="ol"><b>화면 흔들림</b><small id="optShakeVal">흔들림 약하게</small></span><span class="optSwitch"><i></i></span></button><button class="optRow" id="optSound"><span class="ol"><b>효과음</b><small id="optSoundVal">꺼짐</small></span><span class="optSwitch"><i></i></span></button></div><p class="tiny">설정은 이 브라우저에 저장됩니다. 좌우반전은 터치 조작 화면에 바로 적용됩니다.</p></div></section>
-<section id="rankModal" class="modal hidden"><div class="modalbox parchment"><div class="modalHead"><h2>섬의 랭킹</h2><button class="xclose" data-close="rankModal" aria-label="닫기">×</button></div><div id="rankList" class="rankList"><div class="rEmpty">불러오는 중…</div></div><p class="tiny" style="margin-top:10px">점수를 전송하면 이곳에 이름이 오릅니다. 목록은 페이지를 열거나 새로고침할 때, 그리고 새로고침 버튼을 누를 때 갱신됩니다. 사용자별로 최고 기록만 등록됩니다.</p><div class="actions"><button id="rankRefresh" class="ghost">새로고침</button></div></div></section><section id="statusModal" class="modal hidden"><div class="modalbox parchment"><div class="modalHead"><h2>상태창</h2><button class="xclose" id="statusClose" aria-label="닫기">×</button></div><div id="statusBody" class="statusBox"></div></div></section>
+<section id="rankModal" class="modal hidden"><div class="modalbox parchment"><div class="modalHead"><h2>섬의 랭킹</h2><button class="xclose" data-close="rankModal" aria-label="닫기">×</button></div><div id="rankList" class="rankList"><div class="rEmpty">불러오는 중…</div>
+<div id="rankDetail" class="hidden"></div>
+</div><p class="tiny" style="margin-top:10px">점수를 전송하면 이곳에 이름이 오릅니다. 목록은 페이지를 열거나 새로고침할 때, 그리고 새로고침 버튼을 누를 때 갱신됩니다. 사용자별로 최고 기록만 등록됩니다.</p><div class="actions"><button id="rankRefresh" class="ghost">새로고침</button></div></div></section><section id="statusModal" class="modal hidden"><div class="modalbox parchment"><div class="modalHead"><h2>상태창</h2><button class="xclose" id="statusClose" aria-label="닫기">×</button></div><div id="statusBody" class="statusBox"></div></div></section>
 <section id="endModal" class="modal hidden"><div class="modalbox"><div id="endEmblem" class="emblem" aria-hidden="true"></div><div id="endTag" class="eyebrow"></div><h2 id="endTitle"></h2><p id="endText" class="muted"></p><div class="result-grid"><div><b id="endTime"></b><small>생존 시간</small></div><div><b id="endScore"></b><small>점수</small></div><div><b id="endKills"></b><small>해방한 라히</small></div><div><b id="endLevel"></b><small>도달 레벨</small></div></div><div id="runSummary" class="runSum"></div><p id="record" class="muted"></p><div class="actions"><button id="rankSendBtn" class="inkBtn">랭킹 전송</button><button id="retry" class="primary">다시 도전</button><button id="return" class="ghost">토아 선택</button></div></div></section>
 
 <section id="acctModal" class="modal hidden"><div class="modalbox parchment" style="max-width:440px;width:min(94vw,440px)"><div class="modalHead"><h2>계정</h2><button class="xclose" data-close="acctModal" aria-label="닫기">×</button></div><div id="acctAuthed" class="hidden"></div><div id="acctGuest"><div class="acctTabs"><button id="tabLogin" class="on">로그인</button><button id="tabSignup">계정 만들기</button><button id="tabRecover">복구</button></div><form id="acctForm" autocomplete="on"><label>아이디<input id="acctUser" name="username" autocomplete="username" maxlength="16" placeholder="영문·숫자·한글 3~16자" required></label><label>비밀번호<input id="acctPass" name="password" type="password" autocomplete="current-password" maxlength="64" placeholder="6자 이상" required></label><label id="acctPass2Wrap" class="hidden">비밀번호 확인<input id="acctPass2" type="password" autocomplete="new-password" maxlength="64"></label><label id="acctRecWrap" class="hidden">복구 코드<input id="acctRecCode" maxlength="9" autocomplete="off" placeholder="XXXX-XXXX"></label><label id="acctNewWrap" class="hidden">새 비밀번호<input id="acctNewPass" type="password" autocomplete="new-password" maxlength="64" placeholder="6자 이상"></label><label class="acctKeep" id="acctKeepWrap"><input type="checkbox" id="acctKeep" checked> 이 기기에서 로그인 유지 · 30일</label><p id="acctMsg" class="acctMsg"></p><button type="submit" id="acctSubmit" class="primary">로그인</button></form><p class="acctMore" id="acctMoreWrap"><button type="button" id="acctLost">복구 코드로 비밀번호 재설정</button></p></div><div class="acctFoot"><p class="tiny">계정과 세이브는 <b>이 브라우저(localStorage)</b>에만 저장됩니다. 브라우저 데이터를 지우면 함께 사라지므로 <b>세이브 내보내기</b>로 주기적인 백업을 권장합니다. 실제 개인정보(이름·이메일)는 넣지 마세요.</p></div></div></section>
@@ -1286,7 +1288,7 @@ function hit(e,d,slow=0,opt){
  dmgText(e.x,e.y-e.r*1.05,amount,crit,color);
  g.combo++;g.comboT=2.1;g.comboPop=1;showCombo(g.combo);
  if(e.hp<=0){e.hp=0;e.dead=true;const big=e.type===2;
-  if(big){g.bossDefeated=true;hide('bossbar');toast(BOSS_INFO[e.boss].name+' 격파! 마지막 공세를 버티세요');fanfare(BOSS_INFO[e.boss].name);g.p.hp=Math.min(g.p.maxHp,g.p.hp+55);g.hitstop=.16;g.flashW=.9;g.zoomV=.09;g.slowmo=.75;shards(e.x,e.y,'#ffd9a0',26,1.7);shards(e.x,e.y,'#ffe08a',30,2.2);shards(e.x,e.y,'#fff6d8',20,1.6);fx(e.x,e.y,230,'#ffe0ae');fx(e.x,e.y,150,'#fff6d8');if(g.testBoss){setTimeout(()=>{if(g&&g.testBoss)finish(true)},1600)}}
+  if(big){g.bossDefeated=true;(g.runBosses=g.runBosses||[]).push(BOSS_INFO[e.boss].name);hide('bossbar');toast(BOSS_INFO[e.boss].name+' 격파! 마지막 공세를 버티세요');fanfare(BOSS_INFO[e.boss].name);g.p.hp=Math.min(g.p.maxHp,g.p.hp+55);g.hitstop=.16;g.flashW=.9;g.zoomV=.09;g.slowmo=.75;shards(e.x,e.y,'#ffd9a0',26,1.7);shards(e.x,e.y,'#ffe08a',30,2.2);shards(e.x,e.y,'#fff6d8',20,1.6);fx(e.x,e.y,230,'#ffe0ae');fx(e.x,e.y,150,'#fff6d8');if(g.testBoss){setTimeout(()=>{if(g&&g.testBoss)finish(true)},1600)}}
   else{shards(e.x,e.y,color,e.type===1?12:7,1.15);fx(e.x,e.y,e.r*2.1,'#e9f7d8');g.hitstop=Math.min(.11,g.hitstop+.028)}
   noise(big?1.8:1.1,big?.45:1.3);g.kills++;ruruKill();g.score+=(big?150:(e.type===1?5:1))*(e.v?2:1);
   if(g.gems.length>=220){const old=g.gems.shift();addXP(old.value)}
@@ -2564,9 +2566,9 @@ function renderAcct(){
  const d=ACC.data||blankData();
  const ses=sread();
  const left=ses?Math.max(0,Math.ceil((ses.exp-Date.now())/86400000)):0;
- const tb=d.toaBest||{};
- let bk='',bv=-1;
- for(const k of TOA_KEYS){const v=Number(tb[k]||0);if(v>bv){bv=v;bk=k}}
+ const tp=d.toaPlays||{};
+ let bk='',bv=0;
+ for(const k of TOA_KEYS){const v=Number(tp[k]||0);if(v>bv){bv=v;bk=k}}
  const last=d.last;
  box.innerHTML='<div class="acctCard">'
   +'<div class="acctName">'+esc(ACC_NAME)+'<span class="acctBadge">로그인됨</span></div>'
@@ -2668,7 +2670,30 @@ async function doAcct(){
   return;
  }
  const rec=db[u];
- if(!rec)return acctSay('없는 아이디입니다. 계정 만들기를 이용하세요.');
+ if(!rec){
+  var cSalt=null;
+  try{const sr=await cRpc('cloud_salt',{p_user:u});if(sr.ok&&sr.res)cSalt=sr.res}catch(e){}
+  if(cSalt){
+   const cph=await hashPass(p,cSalt);
+   const lg=await cRpc('cloud_login',{p_user:u,p_ph:cph});
+   if(lg.ok&&lg.res&&lg.res.ok){
+    const r2=migrateRec(u,lg.res.data);
+    const ses2=issueSession(r2,days);
+    const db2=loadDB();db2[u]=r2;
+    const rsv=saveDB(db2);
+    if(!rsv.ok)return acctSay('계정을 불러왔지만 저장하지 못했습니다. 저장 공간을 확인하세요.');
+    ACC_NAME=u;ACC=r2;swrite({u:u,tok:ses2.tok,exp:ses2.exp});
+    try{const gb=Number(localStorage.getItem('mata-nui-best'))||0;if(gb>(ACC.data.best||0)){ACC.data.best=gb;persist()}}catch(e){}
+    updateAccountBar();refreshMenuArt();
+    $('acctGuest').classList.add('hidden');$('acctAuthed').classList.remove('hidden');
+    renderAcct();
+    toast(u+'님, 클라우드에서 계정을 불러왔습니다');beep(720,.1);
+    cSyncOnLogin(u,p);
+    return;
+   }
+  }
+  return acctSay('없는 아이디입니다. 계정 만들기를 이용하세요.');
+ }
  const now=Date.now();
  if(rec.fail&&rec.fail.until>now){
   const left=Math.ceil((rec.fail.until-now)/1000);
@@ -2821,7 +2846,13 @@ async function cCloudRestore(){
   const rec=cRec();
   if(!rec)return;
   const rd=await cRpc('cloud_read',{p_user:ACC_NAME,p_tok:s.tok});
-  if(!rd.ok||!rd.res||!rd.res.ok)return;
+  if(!rd.ok||!rd.res||!rd.res.ok){
+   if(rd.ok&&rd.res&&rd.res.reason==='nou'&&!CLOUD_BUSY){
+    const rg=await cRpc('cloud_register',{p_user:ACC_NAME,p_data:rec});
+    if(rg.ok&&rg.res&&rg.res.ok)toast('클라우드에 계정을 연결했습니다 — 어느 기기에서나 이어서 플레이합니다');
+   }
+   return;
+  }
   const remote=rd.res.data||{};
   const rTs=Number(remote.lastSync)||0,lTs=Number(rec.lastSync)||0;
   if(rTs>lTs+500)cAdopt(remote);
@@ -3235,7 +3266,18 @@ requestAnimationFrame(frame);
 })();
 </script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","spa":2}' crossorigin="anonymous"></script>
-<style id="rank-css">#rankModal .modalbox{max-width:560px;width:min(94vw,560px)}#rankModal .rankList{margin:10px 0 4px;border-top:2px solid #1d3442}#rankModal .rRow{display:flex;align-items:center;gap:10px;padding:8px 6px;border-bottom:1px solid #2c4450;font-family:var(--pnum),system-ui;font-size:13px;color:#eaf4f9}#rankModal .rRow.me{background:#1a3a4acc;box-shadow:inset 0 0 0 1px #e0a52a88;border-radius:4px}#rankModal .rPos{width:36px;text-align:right;font-weight:900;color:#ffd45c}#rankModal .rName{flex:1;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#rankModal .rName small{color:#9fd0e0;font-weight:600;margin-left:6px;font-size:11px}#rankModal .rMeta{font-size:11px;color:#9fd0e0;white-space:nowrap}#rankModal .rScore{font-weight:900;color:#ffe9a8}#rankModal .rEmpty{padding:28px 0;text-align:center;color:#9fd0e0;font-size:13px;line-height:1.7}#rankSendBtn:disabled{opacity:.6;cursor:default}</style><script id="rank-js">
+<style id="rank-css">#rankModal .modalbox{max-width:560px;width:min(94vw,560px)}#rankModal .rankList{margin:10px 0 4px;border-top:2px solid #1d3442}#rankModal .rRow{display:flex;align-items:center;gap:10px;padding:8px 6px;border-bottom:1px solid #2c4450;font-family:var(--pnum),system-ui;font-size:13px;color:#eaf4f9}#rankModal .rRow.me{background:#1a3a4acc;box-shadow:inset 0 0 0 1px #e0a52a88;border-radius:4px}#rankModal .rPos{width:36px;text-align:right;font-weight:900;color:#ffd45c}#rankModal .rName{flex:1;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#rankModal .rName small{color:#9fd0e0;font-weight:600;margin-left:6px;font-size:11px}#rankModal .rMeta{font-size:11px;color:#9fd0e0;white-space:nowrap}#rankModal .rScore{font-weight:900;color:#ffe9a8}#rankModal .rEmpty{padding:28px 0;text-align:center;color:#9fd0e0;font-size:13px;line-height:1.7}#rankSendBtn:disabled{opacity:.6;cursor:default}
+.rLink{cursor:pointer}.rLink:hover{color:#ffd479}.rLink:hover small{color:#ffd479}
+#rankDetail{margin:10px 12px 4px;padding:10px 12px;border:1px solid #3a4a55;border-radius:10px;background:rgba(10,16,22,.85);font-size:12.5px}
+#rankDetail.hidden{display:none}
+.rdHead{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:14px;margin-bottom:8px;color:#e8f1f8}
+.rdX{background:none;border:none;color:#9fb4c2;font-size:18px;cursor:pointer;padding:0 2px}
+.rdRow{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dashed rgba(255,255,255,.07);color:#c7d4dd}
+.rdRow b{color:#f2f7fa;font-weight:700}
+.rdNote{margin-top:6px;font-size:11px;color:#8fa3b0}
+
+#customBtn{text-align:center;width:100%;justify-content:center!important}
+</style><script id="rank-js">
 (function(){
 var SB_URL='https://gvtoefrgbeijeypfrijo.supabase.co';
 var SB_KEY='sb_publishable_qo39-jTu2NUUNAuhZjeaDA_TqK5N-KK';
@@ -3247,13 +3289,33 @@ function fmtT(v){v=Math.floor(v||0);return Math.floor(v/60)+':'+String(v%60).pad
 function openRank(){document.getElementById('rankModal').classList.remove('hidden');loadRank()}
 function loadRank(){
  var box=document.getElementById('rankList');box.innerHTML='<div class="rEmpty">불러오는 중…</div>';
- fetch(SB_URL+'/rest/v1/leaderboard?select=name,best_score,toa,win,kills,play_time,level&order=best_score.desc,best_at.asc&limit=50',{headers:{apikey:SB_KEY}})
+ fetch(SB_URL+'/rest/v1/leaderboard?select=name,best_score,toa,win,kills,play_time,level,details&order=best_score.desc,best_at.asc&limit=50',{headers:{apikey:SB_KEY}})
  .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
  .then(function(rows){
+  window.__rankRows=rows||[];
   if(!rows.length){box.innerHTML='<div class="rEmpty">아직 등록된 기록이 없습니다.<br>첫 번째 주인공이 되어 보세요!</div>';return}
   var me=(G()&&G().isLogged&&G().isLogged())?String(G().accountName||'').toUpperCase():null;
-  box.innerHTML=rows.map(function(r,i){return '<div class="rRow'+(me&&r.name===me?' me':'')+'"><span class="rPos">'+(i+1)+'</span><span class="rName">'+esc(r.name)+'<small>'+esc(toaName(r.toa))+'</small></span><span class="rMeta">'+(r.win?'승리':'패배')+' · '+fmtT(r.play_time)+' · Lv'+r.level+'</span><span class="rScore">'+r.best_score+'</span></div>'}).join('');
+  box.innerHTML=rows.map(function(r,i){return '<div class="rRow'+(me&&r.name===me?' me':'')+'"><span class="rPos">'+(i+1)+'</span><span class="rName rLink" data-i="'+i+'" title="기록 상세 보기">'+esc(r.name)+'<small>'+esc(toaName(r.toa))+'</small></span><span class="rMeta">'+(r.win?'승리':'패배')+' · '+fmtT(r.play_time)+' · Lv'+r.level+'</span><span class="rScore">'+r.best_score+'</span></div>'}).join('');
+  box.onclick=function(ev){var t=ev.target&&ev.target.closest?ev.target.closest('.rLink'):null;if(t)openRankDetail(+t.getAttribute('data-i'))};
  }).catch(function(e){box.innerHTML='<div class="rEmpty">랭킹을 불러올 수 없습니다.<br>'+esc(e.message)+'</div>'});
+}
+function openRankDetail(i){
+ var r=(window.__rankRows||[])[i];if(!r)return;
+ var det=r.details||{};
+ var boss=(det.bosses&&det.bosses.length)?det.bosses.map(esc).join(', '):'기록 없음';
+ var rew=(det.rewards!=null&&det.rewards!==false)?Number(det.rewards).toLocaleString()+' 카노카':'기록 없음';
+ var m=document.getElementById('rankDetail');
+ if(!m)return;
+ m.innerHTML='<div class="rdHead">'+esc(r.name)+'<button class="rdX" id="rdClose" aria-label="닫기">×</button></div>'
+  +'<div class="rdRow"><span>점수</span><b>'+r.best_score+'</b></div>'
+  +'<div class="rdRow"><span>기록한 토아</span><b>'+esc(det.toa||toaName(r.toa))+'</b></div>'
+  +'<div class="rdRow"><span>결과</span><b>'+(r.win?'승리':'패배')+' · '+fmtT(r.play_time)+' · Lv'+r.level+' · '+r.kills+'킬</b></div>'
+  +'<div class="rdRow"><span>얻은 보상</span><b>'+rew+'</b></div>'
+  +'<div class="rdRow"><span>잡은 보스</span><b>'+boss+'</b></div>'
+  +((det.toa||det.bosses)?'':'<div class="rdNote">상세 정보 등록 이전의 기록입니다.</div>');
+ m.classList.remove('hidden');
+ var x=document.getElementById('rdClose');
+ if(x)x.onclick=function(){m.classList.add('hidden')};
 }
 function doSend(){
  if(sent)return;var g=G();if(!g||g.state!=='ended')return;
@@ -3261,7 +3323,11 @@ function doSend(){
  var name;
  if(g.isLogged&&g.isLogged()){name=String(g.accountName||'')}
  else{name=(localStorage.getItem('rank_name_v1')||'');name=prompt('랭킹에 표시할 이름 (1~12자, 공백 없이)',name)||'';name=name.trim();if(!name)return;try{localStorage.setItem('rank_name_v1',name)}catch(e){}}
- var payload={p_name:name,p_score:Math.floor(d.score||0),p_toa:(d.selected!=null?d.selected:0),p_win:document.getElementById('endModal').classList.contains('won'),p_kills:Math.floor(d.kills||0),p_play_time:Math.floor(d.time||0),p_level:Math.floor(d.level||1)};
+ var raw=null;try{raw=g.dbg?g.dbg():null}catch(e){}
+  var runToa=(raw&&raw.runToa!=null)?raw.runToa:(d.selected!=null?d.selected:0);
+  var runBosses=(raw&&raw.runBosses)?raw.runBosses.slice():[];
+  var runKanoka=(raw&&raw.runKanoka!=null)?Math.floor(raw.runKanoka):null;
+  var payload={p_name:name,p_score:Math.floor(d.score||0),p_toa:runToa,p_win:document.getElementById('endModal').classList.contains('won'),p_kills:Math.floor(d.kills||0),p_play_time:Math.floor(d.time||0),p_level:Math.floor(d.level||1),p_details:{toa:toaName(runToa),rewards:runKanoka,bosses:runBosses}};
  btn.disabled=true;btn.textContent='전송 중…';
  fetch(SB_URL+'/rest/v1/rpc/submit_score',{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(payload)})
  .then(function(r){return r.json()})
