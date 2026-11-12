@@ -3387,7 +3387,7 @@ function openMail(){
  box.innerHTML='<div class="mEmpty">불러오는 중…</div>';
  var s=sess();
  rpc('mail_list',{p_user:s.u,p_tok:s.tok}).then(function(r){
-  if(!r.ok||!r.res||!r.res.ok){box.innerHTML='<div class="mEmpty">우편을 불러올 수 없습니다.</div>';return}
+  if(!r.ok||!r.res||!r.res.ok){var rn=r.res&&r.res.reason;box.innerHTML=(rn==='tok'||rn==='nou')?'<div class="mEmpty">세션이 만료되었습니다.<br>우측 상단 계정 메뉴에서 <b>로그아웃 후 다시 로그인</b>해 주세요.</div>':'<div class="mEmpty">우편을 불러올 수 없습니다.<br>네트워크를 확인하고 잠시 후 다시 시도해 주세요.</div>';return}
   var mails=r.res.mails||[];
   if(!mails.length){box.innerHTML='<div class="mEmpty">도착한 우편이 없습니다.<br>매주 목요일 정오(서울 시간)에 랭킹이 결산되고, 1~2위에게 보상 우편이 도착합니다.</div>';return}
   box.innerHTML=mails.map(function(x){return '<div class="mItem'+(x.claimed?' done':'')+'"><div class="mTtl">'+esc(x.title)+(x.claimed?'<span class="mDone">수령 완료</span>':'')+'</div><div class="mBody">'+esc(x.body)+'</div>'+((x.amount>0&&!x.claimed)?'<button class="mClaim" data-id="'+x.id+'" data-amt="'+x.amount+'">받기 · '+x.amount+' 카노카</button>':'')+'</div>'}).join('');
@@ -3409,7 +3409,7 @@ function bind(){
      try{G().addKanoka(amt)}catch(e){}
      loadUnread();
      openMail();
-    } else {c.textContent='실패 — 다시 시도하세요';c.disabled=false}
+    } else {var rn2=r.res&&r.res.reason;c.textContent=(rn2==='tok'||rn2==='nou')?'세션 만료 — 로그아웃 후 다시 로그인하세요':'실패 — 다시 시도하세요';c.disabled=false}
    });
   }
  });
