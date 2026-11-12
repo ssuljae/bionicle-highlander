@@ -2817,7 +2817,7 @@ async function cSyncOnLogin(u,p){
   if(!lg.ok||!lg.res||!lg.res.ok)return;
   const remote=lg.res.data||{};
   const rTs=Number(remote.lastSync)||0,lTs=Number(rec.lastSync)||0;
-  if(rTs>lTs+500)cAdopt(remote);cUploadNow('');
+  if(rTs>lTs+500){cAdopt(remote);cUploadNow('')}
   else if(lTs>rTs)await cUploadWith(u,ph,'',rec);
  }catch(e){}
 }
@@ -2830,7 +2830,7 @@ async function cSyncExists(u,p,rec){
   if(lg.ok&&lg.res&&lg.res.ok){
    const remote=lg.res.data||{};
    const rTs=Number(remote.lastSync)||0,lTs=Number(rec.lastSync)||0;
-   if(rTs>lTs+500)cAdopt(remote);cUploadNow('');
+   if(rTs>lTs+500){cAdopt(remote);cUploadNow('')}
    else if(lTs>rTs)await cUploadWith(u,ph,'',rec);
   }
  }catch(e){}
@@ -2852,7 +2852,7 @@ async function cCloudRestore(){
   }
   const remote=rd.res.data||{};
   const rTs=Number(remote.lastSync)||0,lTs=Number(rec.lastSync)||0;
-  if(rTs>lTs+500)cAdopt(remote);cUploadNow('');
+  if(rTs>lTs+500){cAdopt(remote);cUploadNow('')}
   else if(lTs>rTs)cUploadNow('');
  }catch(e){}
 }
