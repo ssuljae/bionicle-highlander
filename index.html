@@ -1337,7 +1337,7 @@ var _roul={started:0,stopT:0,finalK:null,raf:0};
 function _roulKandName(k){var n=BOSS_KEYS[k];return{n:n,k:k}}
 function startBossRoulette(){
  if(!g||g._roulDone)return;g._roulDone=1;
- var keys=BOSS_KEYS.slice();var el=document.getElementById('bossRoulette'),im=document.getElementById('roulImg'),nm=document.getElementById('roulName');
+ var keys=BOSS_KEYS.slice();var fk=g.bossKind=BOSS_KEYS[(Math.random()*BOSS_KEYS.length)|0];var el=document.getElementById('bossRoulette'),im=document.getElementById('roulImg'),nm=document.getElementById('roulName');
  el.classList.remove('hidden');
  var t0=performance.now(),DUR=1400;
  (function spin(now){
@@ -1349,7 +1349,6 @@ function startBossRoulette(){
    nm.textContent='';
    _roul.raf=requestAnimationFrame(spin);
   }else{
-   var fk=keys[(Math.random()*keys.length)|0];
    var art=SPRITE_DATA[BOSS_SPRITES[fk]]?SPRITE_DATA[BOSS_SPRITES[fk]].uri:(MASK_ART.nova||'');
    im.src=art;im.style.transform='scale(1.18)';im.style.transition='transform .3s cubic-bezier(.2,2.4,.4,1)';
    nm.textContent=BOSS_INFO[fk]?BOSS_INFO[fk].title+' · '+BOSS_INFO[fk].name+' 등장!':'보스 등장!';
@@ -1550,7 +1549,7 @@ function tick(dt){if(state!=='playing'||!g)return;const p=g.p;
  else{const k=Math.min(1,dt*14);p.vx=(p.vx||0)+(mx*moveSpd-(p.vx||0))*k;p.vy=(p.vy||0)+(my*moveSpd-(p.vy||0))*k;if(Math.abs(p.vx)<.6&&Math.abs(mx)<.01)p.vx=0;if(Math.abs(p.vy)<.6&&Math.abs(my)<.01)p.vy=0;p.x+=p.vx*dt;p.y+=p.vy*dt}
  p.moving=(Math.abs(mx)+Math.abs(my))>.06||p.dash>0;if(Math.abs(mx)>.06)p.face=mx<0?-1:1;
  p.walkT=p.moving?p.walkT+dt*3:0;p.dashFx=Math.max(0,(p.dashFx||0)-dt*4);
- if(g.time>=238.5&&!g._roulDone){startBossRoulette()}if(g.time>=240&&!g.bossSpawned){g.bossSpawned=true;var _re=document.getElementById('bossRoulette');if(_re)_re.classList.add('hidden');const bk=BOSS_KEYS[(Math.random()*BOSS_KEYS.length)|0];spawn(true,bk);show('bossbar');setBossBar(bk);toast(`경고 · ${BOSS_INFO[bk].title}, ${BOSS_INFO[bk].name} 출현`);g.shake=3.4;g.shx=0;g.shy=0;g.flashW=.35;g.dmgFlash=.4;g.siren={n:9,t:.15};noise(1.6,.4)}
+ if(g.time>=238.5&&!g._roulDone){startBossRoulette()}if(g.time>=240&&!g.bossSpawned){g.bossSpawned=true;var _re=document.getElementById('bossRoulette');if(_re)_re.classList.add('hidden');const bk=g.bossKind||BOSS_KEYS[(Math.random()*BOSS_KEYS.length)|0];spawn(true,bk);show('bossbar');setBossBar(bk);toast(`경고 · ${BOSS_INFO[bk].title}, ${BOSS_INFO[bk].name} 출현`);g.shake=3.4;g.shx=0;g.shy=0;g.flashW=.35;g.dmgFlash=.4;g.siren={n:9,t:.15};noise(1.6,.4)}
  if(!g.testBoss){g.spawn-=dt;if(g.spawn<=0){const count=1+Math.floor(g.time/85);for(let i=0;i<count&&g.enemies.length<g.cap;i++)spawn();g.spawn=Math.max(.46,1.30-g.time/430)}}
  if(g.awaken==='gali'){if((g.jetCd||0)>0){g.jetCd=Math.max(0,g.jetCd-dt);if(g.jetCd===0){toast('워터 젯 준비 완료');beep(620,.1)}}if(g.jetMode){g.jetTime=(g.jetTime||0)-dt;if(g.jetTime<=0){g.jetTime=0;g.jetMode=false;g.jet=null;toast('워터 젯 종료')}}}if(g.awaken==='gali'&&g.jetMode){const tg=nearest();
   if(tg){const p=g.p,st=wStats(),mm=st.mm||0,jw=30+6*mm,ang=Math.atan2(tg.y-p.y,tg.x-p.x),L=Math.hypot(tg.x-p.x,tg.y-p.y);
@@ -3445,5 +3444,6 @@ settle();
 loadUnread();
 })();
 </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
