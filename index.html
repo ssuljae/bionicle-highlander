@@ -942,7 +942,7 @@ const TOA=[
  {name:'타후',element:'불',color:'#f29261',dark:'#913f2a',tool:'불꽃 검',desc:'화염구 · 1초 뒤 대상에게 기본 피해량 50%의 추가피해',rate:.9,damage:35,speed:170,hp:120},
  {name:'갈리',element:'물',color:'#68cce7',dark:'#226387',tool:'쌍갈고리',desc:'물의 파동 · 투사체에 맞은 적의 주변에 기본 피해량 35%의 추가피해',rate:1.05,damage:30,speed:170,hp:120},
  {name:'레와',element:'공기',color:'#a5db74',dark:'#337447',tool:'도끼',desc:'절풍 · 투사체가 적을 1명까지 관통함',rate:.7,damage:30,speed:200,hp:90},
- {name:'코파카',element:'얼음',color:'#e1f4f2',dark:'#719da7',tool:'얼음 검과 방패',desc:'얼음검 · 20%확률로 보스를 제외한 적을 3초동안 빙결시키고, 3초뒤에 빙결된 적을 파괴하여 주변에 100의 피해를 줍니다.',rate:1,damage:35,speed:170,hp:130},
+ {name:'코파카',element:'얼음',color:'#e1f4f2',dark:'#719da7',tool:'얼음 검과 방패',desc:'얼음검 · 20%확률로 보스를 제외한 적을 3초동안 빙결시키고, 3초뒤에 빙결된 적을 파괴하여 주변에 250의 피해를 줍니다.',rate:1,damage:35,speed:170,hp:130},
  {name:'오누아',element:'대지',color:'#2e2b36',dark:'#0f0d13',tool:'발톱',desc:'충격파 · 주변에 광역 피해',rate:1.25,damage:20,speed:160,hp:150},
  {name:'포하투',element:'돌',color:'#e3bd81',dark:'#806038',tool:'바위 발차기',desc:'튕기는 바위 · 투사체에 맞은 적과 가까운 적에게 기본 피해량 90%의 연쇄피해',rate:1.15,damage:30,speed:190,hp:100}
 ];
@@ -1359,7 +1359,7 @@ function hit(e,d,slow=0,opt){
  e.squash=Math.min(1,(e.squash||0)+.55*power+(crit?.25:0));
  g.hitstop=Math.min(.095,g.hitstop+(e.type===2?.022:.042));
  impact(e.x,e.y,color,power*(crit?1.5:1),crit);sfx('enemy_hit');
- dmgText(e.x,e.y-e.r*1.05,amount,crit,color);
+ if(!opt?.silent)dmgText(e.x,e.y-e.r*1.05,amount,crit,color);
  g.combo++;g.comboT=2.1;g.comboPop=1;showCombo(g.combo);
  if(e.hp<=0){e.hp=0;e.dead=true;const big=e.type===2;
   if(big){g.bossDefeated=true;(g.runBosses=g.runBosses||[]).push(BOSS_INFO[e.boss].name);hide('bossbar');if(g.inf){g._bossKills=(g._bossKills||0)+1;g.infAlive=(g.infAlive||[]).filter(x=>!x.dead&&x!==e);g.bossDefeated=g.infAlive.length===0;if(g.infAlive.length)playMusic('bgm_boss',1);else playMusic(MUSIC_KEY[CURMAP]||'bgm_ta',2.5);toast(BOSS_INFO[e.boss].name+' 격파!'+(g.infAlive.length?' 남은 보스와의 전투를 계속합니다':' 다음 보스를 준비하세요!'))}else toast(BOSS_INFO[e.boss].name+' 격파! 마지막 공세를 버티세요');fanfare(BOSS_INFO[e.boss].name);playMusic(MUSIC_KEY[CURMAP]||'bgm_ta',2.5);g.p.hp=Math.min(g.p.maxHp,g.p.hp+55);g.hitstop=.16;g.flashW=.9;g.zoomV=.09;g.slowmo=.75;shards(e.x,e.y,'#ffd9a0',26,1.7);shards(e.x,e.y,'#ffe08a',30,2.2);shards(e.x,e.y,'#fff6d8',20,1.6);fx(e.x,e.y,230,'#ffe0ae');fx(e.x,e.y,150,'#fff6d8');if(g.testBoss){setTimeout(()=>{if(g&&g.testBoss)finish(true)},1600)}}
@@ -1482,7 +1482,7 @@ function rockBlast(r,e0){sfx('onua_rock');
   hit(o,dm,.4,{color:'#b0a0cb',angle:Math.atan2(o.y-r.y,o.x-r.x)})}
  if(e0&&!e0.dead)fx(e0.x,e0.y,34,'#efe6ff','spark');
 }
-function freezeBurst(e){if(e.dead)return;fx(e.x,e.y,130,'#bfeaff');fx(e.x,e.y,70,'#e8fbff');shards(e.x,e.y,'#bfeaff',12,1.2);hit(e,1e9,0,{color:'#bfeaff'});for(const o of g.enemies){if(o===e||o.dead||o.charm>0)continue;if(Math.hypot(o.x-e.x,o.y-e.y)<130+o.r)hit(o,100,0,{color:'#bfeaff',angle:Math.atan2(o.y-e.y,o.x-e.x)})}} function kopakaMelee(){
+function freezeBurst(e){if(e.dead)return;fx(e.x,e.y,130,'#bfeaff');fx(e.x,e.y,70,'#e8fbff');shards(e.x,e.y,'#bfeaff',12,1.2);hit(e,1e9,0,{color:'#bfeaff',silent:1});for(const o of g.enemies){if(o===e||o.dead||o.charm>0)continue;if(Math.hypot(o.x-e.x,o.y-e.y)<130+o.r)hit(o,250,0,{color:'#bfeaff',angle:Math.atan2(o.y-e.y,o.x-e.x)})}} function kopakaMelee(){
  const p=g.p,dm=basicDmg()*4,R=g.xrayT>0?152:122;
  const arr=g.enemies.filter(e=>!e.dead&&!(e.charm>0)&&Math.hypot(e.x-p.x,e.y-p.y)<R+e.r);
  if(!arr.length){g.recoil=.06;return}
@@ -2260,7 +2260,7 @@ function hero(x,y){const t=TOA[selected],p=g.p,key=SPRITE_KEYS[selected];
 function enemy(e,x,y){const i=e.type,size=i===0?73:(i===1&&e.nui!=='rama'?94:[52,78,158][i]),bob=i===0?Math.sin(g.time*7+e.id*1.7)*5:0,flip=g.p.x<e.x,sq=e.squash||0;
  ctx.fillStyle='#020c0960';const _sr=i===0?22:(i===1&&e.nui!=='rama'?26:[16,22,44][i]);ctx.fillRect(x-_sr,y+[16,26,50][i]-_sr*.55,_sr*2,_sr*1.1);
  const _bk2=i===2?(e.mbk?'muaka_black':(e.boss&&BOSS_SPRITES[e.boss]?BOSS_SPRITES[e.boss]:RAHI_KEYS[2])):(i===0?(e.k||RAHI_KEYS[0]):(i===1?(e.v?(e.nui==='rama'?'rahi_nuirama2':'rahi_nuijaga2'):(e.nui==='rama'?'rahi_nuirama':'rahi_nuijaga')):RAHI_KEYS[i]));
- const shown=drawSprite(_bk2,x,y+bob,size,flip,e.flash>0?'#fff0da':null,.92,1+sq*.24,1-sq*.2);
+ const shown=drawSprite(_bk2,x,y+bob,size,flip,e.frozenT>0?'#ffffff':(e.flash>0?'#fff0da':null),.92,1+sq*.24,1-sq*.2);
  if(!shown){circle(x,y,16,'#9b739b','#303e32');circle(x,y,7,'#3b4035')}
  if(e.flash>0){ctx.save();ctx.globalAlpha=e.flash*2;circle(x,y+bob,size*.3,null,'#ffe3b8');ctx.restore()}
  if(e.type===2&&(e.mode==='telegraph'||e.mode==='charge'||e.mode==='lungePrep'||e.mode==='lunge')){ctx.save();
