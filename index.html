@@ -3029,7 +3029,8 @@ function saveRunResult(score,meta){
  d.toaPlays[tk]=(d.toaPlays[tk]||0)+1;
  d.last={score:score,time:meta.time||0,kills:meta.kills||0,level:meta.level||1,toa:ti,win:!!meta.win,at:Date.now()};
  try{const q=questState();if(q){const bk=(typeof g==='object'&&g&&g.runBossKeys)||[];const rahi=Math.max(0,(meta.kills||0)-bk.length);
-  q.stats.rahiAny+=rahi;if(!meta.inf){q.stats.rahiRank+=rahi;for(const k of bk)if(q.stats.boss[k]!=null)q.stats.boss[k]++}}}catch(e){}
+  q.stats.rahiAny+=rahi;if(!meta.inf){q.stats.rahiRank+=rahi;for(const k of bk)if(q.stats.boss[k]!=null)q.stats.boss[k]++;
+   const _tn=(TOA[ti]||{}).name;for(const s of q.slots){if(s&&s.claimed!==1){const dq=QUEST_DEFS[s.qi];if(dq&&dq.stat==='toa'&&dq.toa===_tn&&score>(s.best||0))s.best=score}}}}}catch(e){}
  persist();updateAccountBar();
  $('record').textContent=ACC_NAME+(meta.inf?' · 무한 모드 보상 +':' · 이번 판 +')+gain+' 카노카 (보유 '+d.kanoka+') · 최고 '+d.best+'점';
 }
@@ -3289,12 +3290,14 @@ function questState(){
  q.slots=q.slots||[null,null];
  return q;
 }
-function questProg(d){
+function questSnap(q){return{rahiRank:q.stats.rahiRank||0,rahiAny:q.stats.rahiAny||0,boss:Object.assign({},q.stats.boss)}}
+function questProg(d,s){
  const q=questState();if(!q)return 0;
- if(d.stat==='rahiRank')return Math.min(d.goal,q.stats.rahiRank||0);
- if(d.stat==='rahiAny')return Math.min(d.goal,q.stats.rahiAny||0);
- if(d.stat==='boss')return Math.min(d.goal,q.stats.boss[d.bk]||0);
- if(d.stat==='toa'){const ti=TOA.findIndex(t=>t.name===d.toa);const k=TOA_KEYS[ti];return Math.min(d.goal,(ACC.data.toaBest||{})[k]||0)}
+ s=s||{};const b=s.base||{};
+ if(d.stat==='rahiRank')return Math.min(d.goal,Math.max(0,(q.stats.rahiRank||0)-(b.rahiRank||0)));
+ if(d.stat==='rahiAny')return Math.min(d.goal,Math.max(0,(q.stats.rahiAny||0)-(b.rahiAny||0)));
+ if(d.stat==='boss')return Math.min(d.goal,Math.max(0,(q.stats.boss[d.bk]||0)-((b.boss&&b.boss[d.bk])||0)));
+ if(d.stat==='toa')return Math.min(d.goal,s.best||0);
  return 0;
 }
 function questTick(now){
@@ -3304,8 +3307,9 @@ function questTick(now){
   if(!s||(s.claimed&&now>=(s.respawnAt||0))){
    const other=q.slots[1-i];const ban=[];if(s)ban.push(s.qi);if(other)ban.push(other.qi);
    const cands=[];for(let k=0;k<QUEST_DEFS.length;k++)if(ban.indexOf(k)<0)cands.push(k);
-   q.slots[i]={qi:cands[(Math.random()*cands.length)|0],claimed:0};ch=true;
+   q.slots[i]={qi:cands[(Math.random()*cands.length)|0],claimed:0,base:questSnap(q),best:0};ch=true;
   }
+  if(!s.base){s.base=questSnap(q);s.best=0;ch=true}
  }
  if(ch)persist();
 }
@@ -3315,7 +3319,7 @@ function renderQuests(){
  const now=Date.now();questTick(now);
  const q=questState();
  box.innerHTML=q.slots.map(function(s,i){
-  const d=QUEST_DEFS[s.qi],prog=questProg(d),done=prog>=d.goal;
+  const d=QUEST_DEFS[s.qi],prog=questProg(d,s),done=prog>=d.goal;
   if(s.claimed){
    const left=Math.max(0,(s.respawnAt||0)-now);let h=Math.floor(left/3600000),m=Math.ceil((left%3600000)/60000);if(m>=60){h++;m=0}
    return '<div class="mItem done"><div class="mTtl">'+esc(d.name)+'<span class="mDone">수령 완료</span></div><div class="mBody">'+esc(d.desc)+'</div><div class="qNext">새로운 퀘스트까지 '+(left>0?(h+'시간 '+m+'분'):'잠시 후')+'</div></div>';
@@ -3348,7 +3352,7 @@ function grantMailReward(rw){
  $('questBtn').onclick=()=>openQuests();
  $('questList').addEventListener('click',e=>{const c=e.target.closest&&e.target.closest('.mClaim');if(!c||c.disabled)return;
   const q=questState();if(!q)return;const i=+c.getAttribute('data-slot'),s=q.slots[i],d=QUEST_DEFS[s.qi];
-  if(questProg(d)<d.goal)return;
+  if(questProg(d,s)<d.goal)return;
   s.claimed=1;s.respawnAt=Date.now()+QUEST_RESPAWN;
   ACC.data.kanoka=(ACC.data.kanoka||0)+d.reward;
   persist();updateAccountBar();
