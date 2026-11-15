@@ -1304,6 +1304,7 @@ function buildPool(){
  const out=[];
  for(const m of MASKS){
   const lv=g.masks[m.id]||0;if(lv>=m.max)continue;
+  if(g.inf&&m.id==='ruru')continue;
   if(m.btn&&lv===0&&g.abilities.length>=3)continue;
   out.push({title:lv?`${m.name} ${lv+1}`:m.name,desc:m.desc(lv),icon:MASK_ART[m.id],apply:()=>{grantMask(m)}});
  }
@@ -1457,7 +1458,7 @@ function shoot(w){
   const n=Math.min(cnt,Math.max(1,pool.length));
   for(let i=0;i<n;i++){const tg=pool[i]||target,aa=Math.atan2(tg.y-p.y,tg.x-p.x);
    if(id===0)mk({id:0,vx:Math.cos(aa)*430,vy:Math.sin(aa)*430,r:11*size,damage:dmg,ttl:2.1,pierce:1,burn:dmg*.5,angle:aa});
-   else if(id===1){const gw=g.awaken==='gali'?2:1;mk({id:1,vx:Math.cos(aa)*360,vy:Math.sin(aa)*360,r:13*size*(gw===2?1.5:1),damage:dmg,ttl:1.8,pierce:1,splashR:200*size*gw,splash:dmg*.35*gw,angle:aa})}
+   else if(id===1){const gw=g.awaken==='gali'?2:1;mk({id:1,vx:Math.cos(aa)*360,vy:Math.sin(aa)*360,r:13*size*(gw===2?1.5:1),damage:dmg,ttl:1.8,pierce:1,splashR:140*size*gw,splash:dmg*.35*gw,angle:aa})}
    else if(id===2)mk({id:2,vx:Math.cos(aa)*560,vy:Math.sin(aa)*560,r:12*size,damage:dmg,ttl:1.3,pierce:2+mm,angle:aa});
    else if(id===5)mk({id:5,vx:Math.cos(aa)*340,vy:Math.sin(aa)*340,r:11*size,damage:dmg,ttl:2,pierce:1,bounce:1+mm,angle:aa})}}
  g.recoil=.1;beep(190+id*55,.035);
