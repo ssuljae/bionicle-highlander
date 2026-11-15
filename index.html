@@ -3303,13 +3303,13 @@ function questProg(d,s){
 function questTick(now){
  const q=questState();if(!q)return;let ch=false;
  for(let i=0;i<2;i++){
-  const s=q.slots[i];
+  let s=q.slots[i];
   if(!s||(s.claimed&&now>=(s.respawnAt||0))){
    const other=q.slots[1-i];const ban=[];if(s)ban.push(s.qi);if(other)ban.push(other.qi);
    const cands=[];for(let k=0;k<QUEST_DEFS.length;k++)if(ban.indexOf(k)<0)cands.push(k);
-   q.slots[i]={qi:cands[(Math.random()*cands.length)|0],claimed:0,base:questSnap(q),best:0};ch=true;
+   s=q.slots[i]={qi:cands[(Math.random()*cands.length)|0],claimed:0,base:questSnap(q),best:0};ch=true;
   }
-  if(!s.base){s.base=questSnap(q);s.best=0;ch=true}
+  if(s&&!s.base){s.base=questSnap(q);s.best=0;ch=true}
  }
  if(ch)persist();
 }
