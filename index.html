@@ -3749,8 +3749,8 @@ function bind(){
     var r=await cloud.rpc('v11_mail_delete',{p_user:id.user,p_tok:id.tok,p_id:Number(dl.getAttribute('data-id'))});
     var now=cloud.identity();if(!now||now.user!==id.user||now.tok!==id.tok)return;
     if(r.ok&&r.res&&r.res.ok){loadUnread();openMail()}
-    else{dl.disabled=false;dl.textContent='삭제 실패'}
-   })().catch(function(){dl.disabled=false;dl.textContent='삭제 실패'});
+    else{dl.disabled=false;dl.textContent=(r.res&&r.res.reason==='not_claimed')?'수령 후 삭제 가능':((r.res&&r.res.reason==='tok')?'세션 만료':'삭제 실패 — 서버 SQL 미RUN 여부 확인')}
+   })().catch(function(){dl.disabled=false;dl.textContent='삭제 실패 — 서버 SQL 미RUN 여부 확인'});
    return}
   var c=e.target.closest&&e.target.closest('.mClaim');
   if(c&&!c.disabled){
