@@ -3217,7 +3217,7 @@ function renderCustom(){
  for(let n=0;n<6;n++){
   const b=document.createElement('button');b.type='button';b.className=n===i?'on':'';
   b.innerHTML=`<img src="${portraitSrc(n)}" alt=""><span>${TOA[n].name}</span>`;
-  b.onclick=()=>{CUSTOM_TOA=n;CUSTOM_PREVIEW=null;renderCustom()};
+  b.onclick=()=>{CUSTOM_TOA=n;CUSTOM_PREVIEW=null;SKIN_PREVIEW=null;BETA_PREVIEW=null;renderCustom()};
   tabs.appendChild(b)}
  const art=$('customArt');art.src=previewSrc(i);art.alt=`${TOA[i].name} 미리보기`;
  const pvBox=$('customPreview');if(pvBox)pvBox.className='customPreview'+(pc!==eq?' previewing':'');
@@ -3470,7 +3470,7 @@ function renderSkinUI(){
   bc.innerHTML='<span class="skThumb"><img src="'+(_bhas?BETA_SKIN[i].art:BETA_SKIN[i].sil)+'" alt=""></span><b>'+(_bhas?BETA_SKIN[i].name:'????')+'</b>'+
    (_beq?'<small class="tagOn">사용 중</small>':_bpv?'<small class="tagPrev">미리보기</small>':_bhas?'<small>보유</small>':'<small class="tagPrice">????</small>');
   bc.title=_bhas?'BETA-BLACK 스페셜':'정체를 알 수 없는 스페셜';
-  bc.onclick=function(){if(_bhas){BETA_PREVIEW=null;if(betaEquipped(i)){if(ACC.data.betaEq)delete ACC.data.betaEq[i]}else{ACC.data.betaEq=ACC.data.betaEq||{};ACC.data.betaEq[i]=1}persist();HERO_FROM=selected;HERO_CI=equippedColor(selected);renderCustom();refreshMenuArt();if(i===selected)$('portraitImg').src=portraitSrc(i)}else{BETA_PREVIEW={i:i};beep(560,.04);renderCustom()}};row.appendChild(bc)}
+  bc.onclick=function(){if(_bhas){BETA_PREVIEW=null;if(betaEquipped(i)){if(ACC.data.betaEq)delete ACC.data.betaEq[i]}else{ACC.data.betaEq=ACC.data.betaEq||{};ACC.data.betaEq[i]=1}persist();HERO_FROM=selected;HERO_CI=equippedColor(selected);renderCustom();refreshMenuArt();if(i===selected)$('portraitImg').src=portraitSrc(i)}else{SKIN_PREVIEW=null;BETA_PREVIEW={i:i};beep(560,.04);renderCustom()}};row.appendChild(bc)}
  var bar=$('buyBar');
  if(bar){var show=pv&&!bp;
   if(bp){bar.classList.remove('hidden');$('buyText').innerHTML='<b>????</b> · 특수한 조건으로만 얻을 수 있는 비매품 색상입니다 (카노카 구매 불가)';var btn=$('buyBtn');btn.classList.add('hidden')}
@@ -3480,7 +3480,7 @@ function renderSkinUI(){
  var note=$('customNote');
  note.textContent=!isLogged()?'게스트 모드: 스킨을 자유롭게 미리볼 수 있습니다. 해금과 저장은 로그인 후 가능합니다.'
   :'클래식 스킨은 메뉴 초상화와 게임 속 모습에 적용됩니다. 기본 셀을 누르면 해제됩니다. (보유 '+(ACC.data.kanoka||0)+' 카노카)';
- var _tb=$('customTabs').children[i];if(_tb){var _ti=_tb.querySelector('img');if(_ti&&_ti.src!==portraitSrc(i))_ti.src=portraitSrc(i)}
+ var _tbs=$('customTabs').children;for(var _n=0;_n<_tbs.length;_n++){var _onn=_n===i;if(_tbs[_n].className!==(_onn?'on':''))_tbs[_n].className=_onn?'on':'';var _ti=_tbs[_n].querySelector('img');if(_ti&&_ti.src!==portraitSrc(_n))_ti.src=portraitSrc(_n)}
   updateAccountBar()}
 (function(){
  var _orig=renderCustom;
