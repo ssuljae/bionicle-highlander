@@ -973,32 +973,32 @@ var SKIN_TINT_CACHE={};function drawSprite(k,cx,cy,h,flip,tint,alpha=1,sx=1,sy=1
  if(!spriteReady(k))return false;
  const d=SPRITE_DATA[k];
  if(!tint&&k.indexOf('toa_')===0&&typeof HERO_SKIN_ACTIVE==='function'&&HERO_SKIN_ACTIVE(HERO_FROM)){const si=skinImg(HERO_FROM);
-  if(si){const w=Math.max(1,Math.round(h*si.naturalWidth/si.naturalHeight));ctx.save();ctx.globalAlpha=alpha;ctx.imageSmoothingEnabled=false;
-   ctx.translate(cx,cy);ctx.scale(flip?-sx:sx,sy);ctx.drawImage(si,-w/2,-h/2,w,h);ctx.restore();return true}}
+  if(si){const _kf=HERO_FROM===3?1.5:1,_kh=h*_kf,_oy=h*(_kf-1)/2,w=Math.max(1,Math.round(_kh*si.naturalWidth/si.naturalHeight));ctx.save();ctx.globalAlpha=alpha;ctx.imageSmoothingEnabled=false;
+   ctx.translate(cx,cy-_oy);ctx.scale(flip?-sx:sx,sy);ctx.drawImage(si,-w/2,-_kh/2,w,_kh);ctx.restore();return true}}
  if(tint&&k.indexOf('toa_')===0&&typeof HERO_SKIN_ACTIVE==='function'&&HERO_SKIN_ACTIVE(HERO_FROM)){const si2=skinImg(HERO_FROM);
   if(si2&&si2.complete&&si2.naturalWidth>0){const ck=HERO_FROM+'|'+tint;let sc=SKIN_TINT_CACHE[ck];
    if(!sc){sc=document.createElement('canvas');sc.width=si2.naturalWidth;sc.height=si2.naturalHeight;const x2=sc.getContext('2d');if(x2){x2.imageSmoothingEnabled=false;x2.drawImage(si2,0,0);x2.globalCompositeOperation='source-in';x2.fillStyle=tint;x2.fillRect(0,0,sc.width,sc.height)}SKIN_TINT_CACHE[ck]=sc}
-   const w=Math.max(1,Math.round(h*si2.naturalWidth/si2.naturalHeight));ctx.save();ctx.globalAlpha=alpha;ctx.imageSmoothingEnabled=false;
-   ctx.translate(cx,cy);ctx.scale(flip?-sx:sx,sy);ctx.drawImage(sc,-w/2,-h/2,w,h);ctx.restore();return true}}
+   const _kf=HERO_FROM===3?1.5:1,_kh=h*_kf,_oy=h*(_kf-1)/2,w=Math.max(1,Math.round(_kh*si2.naturalWidth/si2.naturalHeight));ctx.save();ctx.globalAlpha=alpha;ctx.imageSmoothingEnabled=false;
+   ctx.translate(cx,cy-_oy);ctx.scale(flip?-sx:sx,sy);ctx.drawImage(sc,-w/2,-_kh/2,w,_kh);ctx.restore();return true}}
  if(!tint&&k.indexOf('toa_')===0&&typeof HERO_BETA_ACTIVE==='function'&&HERO_BETA_ACTIVE(HERO_FROM)){const bi=betaImg(HERO_FROM);
-  if(bi){const w=Math.max(1,Math.round(h*bi.naturalWidth/bi.naturalHeight));ctx.save();ctx.globalAlpha=alpha;ctx.imageSmoothingEnabled=false;
-   ctx.translate(cx,cy);ctx.scale(flip?-sx:sx,sy);ctx.drawImage(bi,-w/2,-h/2,w,h);ctx.restore();return true}}
+  if(bi){const _kf=HERO_FROM===3?1.5:1,_kh=h*_kf,_oy=h*(_kf-1)/2,w=Math.max(1,Math.round(_kh*bi.naturalWidth/bi.naturalHeight));ctx.save();ctx.globalAlpha=alpha;ctx.imageSmoothingEnabled=false;
+   ctx.translate(cx,cy-_oy);ctx.scale(flip?sx:-sx,sy);ctx.drawImage(bi,-w/2,-_kh/2,w,_kh);ctx.restore();return true}}
  if(!tint&&k.indexOf('toa_')===0&&HERO_CI!==HERO_FROM){
   const vi=variantImg(HERO_FROM,HERO_CI);
-  if(vi){const w=Math.max(1,Math.round(h*vi.naturalWidth/vi.naturalHeight));ctx.save();ctx.globalAlpha=alpha;ctx.imageSmoothingEnabled=false;
-   ctx.translate(cx,cy);ctx.scale(flip?-sx:sx,sy);ctx.drawImage(vi,-w/2,-h/2,w,h);ctx.restore();return true}}
+  if(vi){const _kf=HERO_FROM===3?1.5:1,_kh=h*_kf,_oy=h*(_kf-1)/2,w=Math.max(1,Math.round(_kh*vi.naturalWidth/vi.naturalHeight));ctx.save();ctx.globalAlpha=alpha;ctx.imageSmoothingEnabled=false;
+   ctx.translate(cx,cy-_oy);ctx.scale(flip?-sx:sx,sy);ctx.drawImage(vi,-w/2,-_kh/2,w,_kh);ctx.restore();return true}}
  if(!tint&&k.indexOf('toa_')===0&&HERO_CI!==HERO_FROM){
   const rc=typeof recoloredSprite==='function'?recoloredSprite(HERO_FROM,HERO_CI):null;
-  if(rc){const kf=HERO_FROM===3?1.2:1,kh=h*kf,oy=h*(kf-1)/2,w=Math.max(1,Math.round(kh*d.w/d.h));ctx.save();ctx.globalAlpha=alpha;ctx.imageSmoothingEnabled=false;
+  if(rc){const kf=HERO_FROM===3?1.5:1,kh=h*kf,oy=h*(kf-1)/2,w=Math.max(1,Math.round(kh*d.w/d.h));ctx.save();ctx.globalAlpha=alpha;ctx.imageSmoothingEnabled=false;
    ctx.translate(cx,cy-oy);ctx.scale(flip?-sx:sx,sy);ctx.drawImage(rc,-w/2,-kh/2,w,kh);ctx.restore();return true}}
  const plain=!tint&&Math.abs(sx-1)<.02&&Math.abs(sy-1)<.02;
  if(plain){const b=baked(k,h);
-  if(b){if(alpha<.999)ctx.globalAlpha=alpha;
+  if(b){if(HERO_FROM===3&&k.indexOf('toa_')===0){const KS=1.5,BW=b.width*KS,BH=b.height*KS;if(alpha<.999)ctx.globalAlpha=alpha;ctx.save();ctx.imageSmoothingEnabled=false;ctx.translate(cx,cy-h*(KS-1)/2);if(flip)ctx.scale(-1,1);ctx.drawImage(b,-BW/2,-BH/2,BW,BH);ctx.restore();if(alpha<.999)ctx.globalAlpha=1;return true}if(alpha<.999)ctx.globalAlpha=alpha;
    if(flip){ctx.save();ctx.translate(cx,cy);ctx.scale(-1,1);ctx.drawImage(b,-b.width/2,-b.height/2);ctx.restore()}
    else{ctx.drawImage(b,Math.round(cx-b.width/2),Math.round(cy-b.height/2))}
    if(alpha<.999)ctx.globalAlpha=1;
    return true}}
- const w=h*d.w/d.h,im=tint?tinted(k,tint):SPR[k];ctx.save();ctx.globalAlpha=alpha;ctx.imageSmoothingEnabled=false;ctx.translate(cx,cy);ctx.scale(flip?-sx:sx,sy);ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore();return true}
+ const _hg=(HERO_FROM===3&&k.indexOf('toa_')===0)?1.5:1,_kh=h*_hg,_oy=h*(_hg-1)/2,w=_kh*d.w/d.h,im=tint?tinted(k,tint):SPR[k];ctx.save();ctx.globalAlpha=alpha;ctx.imageSmoothingEnabled=false;ctx.translate(cx,cy-_oy);ctx.scale(flip?-sx:sx,sy);ctx.drawImage(im,-w/2,-_kh/2,w,_kh);ctx.restore();return true}
 function tinted(k,color){if(flashCache[k])return flashCache[k];const d=SPRITE_DATA[k],c=document.createElement('canvas');c.width=d.w;c.height=d.h;const x=c.getContext('2d');if(x){x.imageSmoothingEnabled=false;x.drawImage(SPR[k],0,0,d.w,d.h);x.globalCompositeOperation='source-in';x.fillStyle=color;x.fillRect(0,0,d.w,d.h)}flashCache[k]=c;return c}
 function select(i){selected=i;[...$('roster').children].forEach((b,n)=>{b.classList.toggle('selected',n===i);b.setAttribute('aria-pressed',n===i?'true':'false')});const t=TOA[i];$('portraitImg').src=(typeof portraitSrc==='function'?portraitSrc(i):(TOA_ART[SPRITE_KEYS[i].replace('toa_','')]||SPRITE_DATA[SPRITE_KEYS[i]].uri));$('portraitImg').alt=`${t.name} SD 픽셀 스프라이트`;$('loadout').innerHTML=`<b>마타누이에 상륙 할 토아를 선택하세요</b><br>${t.desc}<br><span class="loadoutStats">기본 피해 ${t.damage} · 체력 ${t.hp} · 이동속도 ${t.speed}</span>`}
 TOA.forEach((t,i)=>{const b=document.createElement('button');b.className='toa';b.style.setProperty('--c',t.color);const oa=(-90+i*60)*Math.PI/180;b.style.setProperty('--ox',(50+40*Math.cos(oa))+'%');b.style.setProperty('--oy',(50+40*Math.sin(oa))+'%');b.innerHTML=`<span class="element">${t.element}</span><strong>${t.name}</strong><small>${t.tool}</small>`;const im=document.createElement('img');im.className='toaThumb';im.alt='';im.src=(typeof portraitSrc==='function'?portraitSrc(i):(TOA_ART[SPRITE_KEYS[i].replace('toa_','')]||SPRITE_DATA[SPRITE_KEYS[i]].uri));b.prepend(im);b.onclick=()=>select(i);$('roster').appendChild(b)});select(0);
