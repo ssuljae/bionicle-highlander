@@ -3417,7 +3417,7 @@ var BETA_IMGS={};function betaImg(i){var im=BETA_IMGS[i];if(!im){im=BETA_IMGS[i]
 function HERO_BETA_ACTIVE(i){return !!(betaEquipped(i)&&betaImg(i))}
 function skinOwned(i){return !!(isLogged()&&ACC.data.skinOwned&&ACC.data.skinOwned[i])}
 function skinEquipped(i){return !!(isLogged()&&ACC.data.skinEq&&ACC.data.skinEq[i])}
-function HERO_SKIN_ACTIVE(i){return !!(skinEquipped(i)&&skinImg(i))}
+function HERO_SKIN_ACTIVE(i){return !!(skinEquipped(i)&&!betaEquipped(i)&&skinImg(i))}
 (function(){var _p=portraitSrc;portraitSrc=function(i){if(betaEquipped(i)){var bi=betaImg(i);if(bi)return BETA_SKIN[i].art}return (skinEquipped(i)&&SKIN_IMGS[i]&&SKIN_IMGS[i].complete&&SKIN_IMGS[i].naturalWidth)?SKIN_ART[i]:_p(i)}})();for(var _si=0;_si<6;_si++)skinImg(_si);
 function onSkinBase(i){BETA_PREVIEW=null;if(isLogged()&&ACC.data.betaEq)delete ACC.data.betaEq[i];if(!isLogged()){toast('게스트 모드: 스킨 해금은 로그인 후 가능합니다');return}
  SKIN_PREVIEW=null;if(ACC.data.skinEq)delete ACC.data.skinEq[i];
@@ -3426,7 +3426,7 @@ function onSkinBase(i){BETA_PREVIEW=null;if(isLogged()&&ACC.data.betaEq)delete A
 function onSkinPick(i){BETA_PREVIEW=null;var owned=skinOwned(i);
  if(owned){SKIN_PREVIEW=null;
   if(!isLogged()){toast('게스트 모드: 미리보기만 가능합니다');renderCustom();return}
-  ACC.data.skinEq=ACC.data.skinEq||{};ACC.data.skinEq[i]=1;
+  if(ACC.data.betaEq)delete ACC.data.betaEq[i];ACC.data.skinEq=ACC.data.skinEq||{};ACC.data.skinEq[i]=1;
   persist();HERO_FROM=selected;HERO_CI=equippedColor(selected);renderCustom();refreshMenuArt();return}
  SKIN_PREVIEW={i:i};beep(560,.04);renderCustom()}
 function onSkinBuy(i){
@@ -3435,14 +3435,14 @@ function onSkinBuy(i){
  if((ACC.data.kanoka||0)<SKIN_COST){toast('카노카가 부족합니다 ('+SKIN_COST+' 필요)');beep(180,.09);return}
  ACC.data.kanoka-=SKIN_COST;
  ACC.data.skinOwned=ACC.data.skinOwned||{};ACC.data.skinOwned[i]=1;
- ACC.data.skinEq=ACC.data.skinEq||{};ACC.data.skinEq[i]=1;
+ if(ACC.data.betaEq)delete ACC.data.betaEq[i];ACC.data.skinEq=ACC.data.skinEq||{};ACC.data.skinEq[i]=1;
  SKIN_PREVIEW=null;
  toast(SKIN_NAME[i]+' 스킨 해금 · '+SKIN_COST+' 카노카 사용');beep(880,.1);
  persist();HERO_FROM=selected;HERO_CI=equippedColor(selected);renderCustom();refreshMenuArt();
  if(i===selected)$('portraitImg').src=portraitSrc(i)}
 function skinCycle(i){var on=skinEquipped(i)||!!(SKIN_PREVIEW&&SKIN_PREVIEW.i===i);if(on)onSkinBase(i);else onSkinPick(i)}
 function renderSkinUI(){
- var i=CUSTOM_TOA,eq=skinEquipped(i),has=skinOwned(i);
+ var i=CUSTOM_TOA,eq=skinEquipped(i),has=skinOwned(i);if(eq&&betaEquipped(i))eq=false;
  var pv=!!(SKIN_PREVIEW&&SKIN_PREVIEW.i===i&&!eq&&!has);
  var art=$('customArt'),si=skinImg(i);
  art.src=((eq||pv)&&si)?SKIN_ART[i]:previewSrc(i);art.alt=SKIN_NAME[i]+' 미리보기';
@@ -3456,8 +3456,8 @@ function renderSkinUI(){
  var sl=$('skinLock');if(sl){sl.classList.toggle('hidden',isLogged());if(!isLogged())sl.textContent='미리보기'}
  var row=$('colorRow');row.style.gridTemplateColumns='repeat(auto-fit,minmax(150px,1fr))';row.replaceChildren();
  var base=document.createElement('button');base.type='button';
- base.className='colorCell'+(!eq?' on':'');
- base.innerHTML='<span class="sw"><i style="background:'+TOA[i].color+'"></i><i style="background:'+TOA[i].dark+'"></i><i style="background:'+TOA[i].color+'55"></i></span><b>'+TOA[i].name+' 기본</b>'+(!eq?'<small class="tagOn">사용 중</small>':'<small>해제</small>');
+ var anyEq=skinEquipped(i)||betaEquipped(i);base.className='colorCell'+(!anyEq?' on':'');
+ base.innerHTML='<span class="sw"><i style="background:'+TOA[i].color+'"></i><i style="background:'+TOA[i].dark+'"></i><i style="background:'+TOA[i].color+'55"></i></span><b>'+TOA[i].name+' 기본</b>'+(!anyEq?'<small class="tagOn">사용 중</small>':'<small>해제</small>');
  base.title='기본 모습';base.onclick=function(){onSkinBase(i)};row.appendChild(base);
  var cell=document.createElement('button');cell.type='button';
  cell.className='colorCell'+(eq?' on':'')+(has?'':' locked')+(pv?' preview':'');
@@ -3470,7 +3470,7 @@ function renderSkinUI(){
   bc.innerHTML='<span class="skThumb"><img src="'+(_bhas?BETA_SKIN[i].art:BETA_SKIN[i].sil)+'" alt=""></span><b>'+(_bhas?BETA_SKIN[i].name:'????')+'</b>'+
    (_beq?'<small class="tagOn">사용 중</small>':_bpv?'<small class="tagPrev">미리보기</small>':_bhas?'<small>보유</small>':'<small class="tagPrice">????</small>');
   bc.title=_bhas?'BETA-BLACK 스페셜':'정체를 알 수 없는 스페셜';
-  bc.onclick=function(){if(_bhas){BETA_PREVIEW=null;if(betaEquipped(i)){if(ACC.data.betaEq)delete ACC.data.betaEq[i]}else{ACC.data.betaEq=ACC.data.betaEq||{};ACC.data.betaEq[i]=1}persist();HERO_FROM=selected;HERO_CI=equippedColor(selected);renderCustom();refreshMenuArt();if(i===selected)$('portraitImg').src=portraitSrc(i)}else{SKIN_PREVIEW=null;BETA_PREVIEW={i:i};beep(560,.04);renderCustom()}};row.appendChild(bc)}
+  bc.onclick=function(){if(_bhas){BETA_PREVIEW=null;if(betaEquipped(i)){if(ACC.data.betaEq)delete ACC.data.betaEq[i]}else{ACC.data.betaEq=ACC.data.betaEq||{};ACC.data.betaEq[i]=1;if(ACC.data.skinEq)delete ACC.data.skinEq[i]}persist();HERO_FROM=selected;HERO_CI=equippedColor(selected);renderCustom();refreshMenuArt();if(i===selected)$('portraitImg').src=portraitSrc(i)}else{SKIN_PREVIEW=null;BETA_PREVIEW={i:i};beep(560,.04);renderCustom()}};row.appendChild(bc)}
  var bar=$('buyBar');
  if(bar){var show=pv&&!bp;
   if(bp){bar.classList.remove('hidden');$('buyText').innerHTML='<b>????</b> · 특수한 조건으로만 얻을 수 있는 비매품 색상입니다 (카노카 구매 불가)';var btn=$('buyBtn');btn.classList.add('hidden')}
