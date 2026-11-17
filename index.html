@@ -3624,7 +3624,7 @@ requestAnimationFrame(frame);
       }).join('') : '<div class="rEmpty">이번 주 등록된 기록이 없습니다.</div>';
     } catch (e) { if (seq === loadSeq) box.innerHTML = '<div class="rEmpty">' + esc(e.message) + '</div>'; }
   }
-  function openRank() { if (el('rankModal')) el('rankModal').classList.remove('hidden'); try{var wr=el('wkReward');if(wr)wr.textContent='이번 주 보상: '+weeklyRewardText();refreshWeeklyInfo()}catch(e){} return loadRank(); }
+  function openRank() { if (el('rankModal')) el('rankModal').classList.remove('hidden'); try{var wr=el('wkReward');if(wr)wr.textContent='이번 주 보상: '+(window.weeklyRewardText?window.weeklyRewardText():'1위 300 카노카 · 2위 100 카노카');refreshWeeklyInfo()}catch(e){} return loadRank(); }
   function openDetail(i) {
     var r = rows[i], m = el('rankDetail');
     if (!r || !m) return;
@@ -3777,6 +3777,17 @@ function bind(){
  });
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();
+(function(){
+ var ov=document.createElement('div');
+ ov.style.cssText='position:fixed;left:0;top:0;width:100%;height:100%;z-index:99999;display:none;align-items:center;justify-content:center;background:rgba(4,14,18,.94);color:#e8f6f0;text-align:center';
+ function show(msg){var m=(msg&&msg.trim())?esc(msg):'더 나은 서비스를 위해 점검 중입니다.<br>잠시 후 다시 이용해 주세요.';ov.innerHTML='<div><div style="font-size:22px;font-weight:bold;letter-spacing:2px;margin-bottom:14px">서버 점검중입니다</div><div style="opacity:.75;line-height:1.7">'+m+'</div></div>';ov.style.display='flex'}
+ function hide(){ov.style.display='none'}
+ document.body.appendChild(ov);
+ function chk(){try{rpc('v11_maintain_info',{}).then(function(r){var d=r&&r.ok&&r.res&&r.res.ok?r.res:null;
+  if(d&&d.maintain)show(d.msg);else hide()}).catch(function(){})}catch(e){}}
+ chk();setInterval(chk,20000);
+})();
+
 loadUnread();
 })();
 </script>
