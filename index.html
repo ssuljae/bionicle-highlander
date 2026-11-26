@@ -4143,9 +4143,11 @@ requestAnimationFrame(frame);
     if (!out || !out.ok) {
       var why = out && out.reason;
       throw new Error(why === 'rate_limit' ? '연속 전송을 제한하고 있습니다. 3초 후 다시 시도하세요.' : why === 'tok' ? '세션이 만료되었습니다. 다시 로그인하세요.' :
-        why === 'rate_limit' ? '기록 전송 간격이 너무 짧습니다. 3초 후 다시 시도하세요.' :
-        why === 'implausible' || why === 'bad_score' || why === 'bad_details' ?
-          '기록을 서버가 거부했습니다 (사유: ' + why + ', details ' + JSON.stringify(body && body.p_details ? Object.keys(body.p_details) : null) + ', face ' + ((body && body.p_details && body.p_details.face) ? body.p_details.face.length + 'B' : 'none') + ', skin=' + ((body && body.p_details) ? body.p_details.skin : '?') + ')' : '요청에 실패했습니다. 다시 시도하세요.');
+        why === 'bad_score' ? '서버가 점수, 기록 범위 또는 상세 데이터 크기를 거부했습니다 (bad_score).' :
+        why === 'bad_details' ? '서버가 기록의 상세 항목 형식을 거부했습니다 (bad_details).' :
+        why === 'implausible' ? '서버 검증에서 점수·처치 수·플레이 시간 또는 승리 조건이 맞지 않습니다 (implausible).' :
+        why === 'run_reuse' ? '같은 플레이 기록이 이미 다른 내용으로 제출되었습니다 (run_reuse).' :
+        '요청에 실패했습니다. 다시 시도하세요.');
     }
     return out;
   }
@@ -4222,36 +4224,7 @@ requestAnimationFrame(frame);
     m.classList.remove('hidden');
     if (el('rdClose')) el('rdClose').onclick = function () { m.classList.add('hidden'); };
   }
-  function shrinkFace(dataUrl,maxBytes){
-  maxBytes=maxBytes||60000;
-  try{
-    if(!dataUrl||dataUrl.indexOf('data:image/')!==0)return dataUrl;
-    if(dataUrl.length<=maxBytes)return dataUrl;
-    var img=new Image();
-    return dataUrl; // sync fallback
-  }catch(e){return dataUrl}
-}
-async function shrinkFaceAsync(dataUrl,maxBytes){
-  maxBytes=maxBytes||60000;
-  try{
-    if(!dataUrl||dataUrl.indexOf('data:image/')!==0)return dataUrl;
-    if(dataUrl.length<=maxBytes)return dataUrl;
-    var img=await new Promise(function(res,rej){var im=new Image();im.onload=function(){res(im)};im.onerror=rej;im.src=dataUrl});
-    var side=Math.min(192,img.width,img.height);
-    for(var q=side;q>=64;q-=16){
-      var c=document.createElement('canvas');c.width=q;c.height=q;
-      c.getContext('2d').drawImage(img,0,0,q,q);
-      var out=c.toDataURL('image/png');
-      if(out.length<=maxBytes)return out;
-      var j=c.toDataURL('image/jpeg',0.85);
-      if(j.length<=maxBytes)return j;
-    }
-    var c2=document.createElement('canvas');c2.width=64;c2.height=64;
-    c2.getContext('2d').drawImage(img,0,0,64,64);
-    return c2.toDataURL('image/jpeg',0.8);
-  }catch(e){return dataUrl}
-}
-async function doSend() {
+  async function doSend() {
     var raw = syncRun(), g = game();
     if (!raw || busy || sent || !g) return;
     if (raw.inf) {
@@ -4264,28 +4237,23 @@ async function doSend() {
     var payload = { p_user: s.user, p_tok: s.tok, p_run_id: raw.id, p_score: Math.floor(raw.score), p_toa: raw.toa,
       p_win: !!(el('endModal') && el('endModal').classList.contains('won')),
       p_kills: Math.floor(raw.kills), p_play_time: Math.floor(raw.time), p_level: Math.floor(raw.level), p_mode: 'rank',
-      p_details: { toa: toaName(raw.toa), skin: raw.skin || (function(){try{return skinCodeOf(raw.toa)}catch(e){return ''}})(), rewards: Math.floor(Math.max(0, raw.score) * 0.005),
+      p_details: { toa: toaName(raw.toa), rewards: 0,
         bosses: Array.isArray(raw.bosses) ? raw.bosses.slice() : [] } };
     if (![payload.p_score, payload.p_toa, payload.p_kills, payload.p_play_time, payload.p_level].every(Number.isSafeInteger)) {
       message('전송할 기록이 올바르지 않습니다.'); return;
+    }
+    // Match floor(p_score * 0.005) on the server, using the submitted integer score.
+    payload.p_details.rewards = Math.floor(payload.p_score / 200);
+    // The server allows 4096 bytes for details. Images stay in the client bundle.
+    if (typeof raw.skin === 'string' && Object.prototype.hasOwnProperty.call(SKIN_THUMB, raw.skin) && Number(raw.skin.split(':')[1]) === raw.toa) {
+      payload.p_details.skin = raw.skin;
     }
     busy = true; syncRun();
     async function submitWork() {
       if (!c || typeof c.flush !== 'function' || await c.flush() !== true) throw new Error('세이브 동기화 후 다시 전송하세요.');
       if (!sameIdentity(s, identity())) throw new Error('계정이 변경되었습니다. 다시 전송하세요.');
       if (gen !== generation || !currentRun(raw.id)) return;
-      try { var _fc = await faceCropForRun(raw); if (_fc) payload.p_details.face = await shrinkFaceAsync(_fc); } catch (e) {}
-      var res;
-      try { res = await rpc('v11_submit_score', payload); }
-      catch (e1) {
-        if (String(e1 && e1.message).indexOf('bad_details') >= 0 && payload.p_details && payload.p_details.face) {
-          var _nf = JSON.parse(JSON.stringify(payload)); delete _nf.p_details.face;
-          try { var _r2 = await rpc('v11_submit_score', _nf);
-            if (_r2 && (_r2.res ? _r2.res.ok : true)) { res = _r2; payload = _nf; toast('얼굴 이미지 없이 전송되었습니다 (이미지 용량 초과)'); }
-            else { throw e1; }
-          } catch (e2) { throw e1; }
-        } else { throw e1; }
-      }
+      var res = await rpc('v11_submit_score', payload);
       if (gen !== generation || !currentRun(raw.id) || !sameIdentity(s, identity())) return;
       sent = true;
       if (btn) { btn.disabled = true; btn.textContent = '전송 완료 · ' + res.rank + '위 (' + res.total + '명 중)'; }
