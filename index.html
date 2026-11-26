@@ -3843,7 +3843,7 @@ function renderExchangeUI(){
  var note=$('customNote');if(note)note.textContent='';
  function _es(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
  var c=WEEKLY_CFG||{};var frag=(isLogged()&&ACC&&ACC.data)?(ACC.data.frag||0):0;
- var goal=c.goal_score||2200,gk=(c.goal_kanoka!=null?c.goal_kanoka:150),gf=(c.goal_frag!=null?c.goal_frag:1);
+ var goal=c.goal_score||2026,gk=(c.goal_kanoka!=null?c.goal_kanoka:150),gf=(c.goal_frag!=null?c.goal_frag:1);
  var lab=WEEKLY_P1.label;var _wa=weeklyP1Art();
  row.style.gridTemplateColumns='';
  row.innerHTML='<div style="grid-column:1/-1;display:flex;flex-direction:column;gap:10px">'+
@@ -4168,7 +4168,7 @@ requestAnimationFrame(frame);
   }
 
   /*2026-11-22 22:55 사용자 지시: ① 랭킹 등록 시 그 당시 플레이한 외형(색상/스킨) 그대로 얼굴을 정사각 크롭해 표시 ② 섬의 랭킹 탭에 이번 주 주간목표 점수 표기 */
-  function weekGoalCfg(){var c=null;try{c=window.WEEKLY_CFG||null}catch(e){}if(!c)return {score:2200,kanoka:150,frag:1};return {score:(c.goal_score!=null?Number(c.goal_score):2200),kanoka:(c.goal_kanoka!=null?c.goal_kanoka:150),frag:(c.goal_frag!=null?c.goal_frag:1)}}
+  function weekGoalCfg(){var c=null;try{c=window.WEEKLY_CFG||null}catch(e){}if(!c)return {score:2026,kanoka:150,frag:1};return {score:(c.goal_score!=null?Number(c.goal_score):2026),kanoka:(c.goal_kanoka!=null?c.goal_kanoka:150),frag:(c.goal_frag!=null?c.goal_frag:1)}}
   function syncWeekGoal(){try{var w=document.getElementById('wkReward');if(!w||!w.parentNode)return;var e=document.getElementById('wkGoal');if(!e){e=document.createElement('div');e.id='wkGoal';e.className='wkGoal';w.parentNode.insertBefore(e,w.nextSibling)}var c=weekGoalCfg();e.innerHTML='이번 주 주간목표 <b>'+c.score.toLocaleString('ko-KR')+'점</b> · 달성 시 카노카 '+c.kanoka+' + 파편 '+c.frag+'개'}catch(err){}}
   function _faceImg(i){try{if(typeof shadowEquipped==='function'&&shadowEquipped(i)&&typeof betaImg==='function'){var sh=betaImg(i);if(sh)return sh}if(typeof betaEquipped==='function'&&betaEquipped(i)&&typeof betaImg==='function'){var be=betaImg(i);if(be)return be}if(typeof skinEquipped==='function'&&skinEquipped(i)&&typeof skinImg==='function'){var sk=skinImg(i);if(sk)return sk}}catch(e){}var im=(typeof ART_IMGS!=='undefined')?ART_IMGS[i]:null;return (im&&im.complete&&im.naturalWidth)?im:null}
   function _bodyShot(img){try{var W=img.naturalWidth||img.width,H=img.naturalHeight||img.height;if(!W||!H)return '';
@@ -4222,7 +4222,36 @@ requestAnimationFrame(frame);
     m.classList.remove('hidden');
     if (el('rdClose')) el('rdClose').onclick = function () { m.classList.add('hidden'); };
   }
-  async function doSend() {
+  function shrinkFace(dataUrl,maxBytes){
+  maxBytes=maxBytes||60000;
+  try{
+    if(!dataUrl||dataUrl.indexOf('data:image/')!==0)return dataUrl;
+    if(dataUrl.length<=maxBytes)return dataUrl;
+    var img=new Image();
+    return dataUrl; // sync fallback
+  }catch(e){return dataUrl}
+}
+async function shrinkFaceAsync(dataUrl,maxBytes){
+  maxBytes=maxBytes||60000;
+  try{
+    if(!dataUrl||dataUrl.indexOf('data:image/')!==0)return dataUrl;
+    if(dataUrl.length<=maxBytes)return dataUrl;
+    var img=await new Promise(function(res,rej){var im=new Image();im.onload=function(){res(im)};im.onerror=rej;im.src=dataUrl});
+    var side=Math.min(192,img.width,img.height);
+    for(var q=side;q>=64;q-=16){
+      var c=document.createElement('canvas');c.width=q;c.height=q;
+      c.getContext('2d').drawImage(img,0,0,q,q);
+      var out=c.toDataURL('image/png');
+      if(out.length<=maxBytes)return out;
+      var j=c.toDataURL('image/jpeg',0.85);
+      if(j.length<=maxBytes)return j;
+    }
+    var c2=document.createElement('canvas');c2.width=64;c2.height=64;
+    c2.getContext('2d').drawImage(img,0,0,64,64);
+    return c2.toDataURL('image/jpeg',0.8);
+  }catch(e){return dataUrl}
+}
+async function doSend() {
     var raw = syncRun(), g = game();
     if (!raw || busy || sent || !g) return;
     if (raw.inf) {
@@ -4245,7 +4274,7 @@ requestAnimationFrame(frame);
       if (!c || typeof c.flush !== 'function' || await c.flush() !== true) throw new Error('세이브 동기화 후 다시 전송하세요.');
       if (!sameIdentity(s, identity())) throw new Error('계정이 변경되었습니다. 다시 전송하세요.');
       if (gen !== generation || !currentRun(raw.id)) return;
-      try { var _fc = await faceCropForRun(raw); if (_fc) payload.p_details.face = _fc; } catch (e) {}
+      try { var _fc = await faceCropForRun(raw); if (_fc) payload.p_details.face = await shrinkFaceAsync(_fc); } catch (e) {}
       var res = await rpc('v11_submit_score', payload);
       if (gen !== generation || !currentRun(raw.id) || !sameIdentity(s, identity())) return;
       sent = true;
@@ -4284,8 +4313,16 @@ requestAnimationFrame(frame);
       level: raw ? Math.floor(raw.level) : 1 + Math.floor(Math.random()*9),
       kills: raw ? Math.floor(raw.kills) : Math.floor(Math.random()*40),
       verified: false, _test: true,
-      details: { toa: toaName(toa), skin: skin, face: face || '', rewards: 0, bosses: [] } };
-    try { row.details.face = row.details.face || skinThumbSrc(skin) || ''; } catch(e){}
+      details: { toa: toaName(toa), skin: skin, face: '', rewards: 0, bosses: [] } };
+    try { payload_dummy=1; } catch(e){}
+    try { var _sf = skinThumbSrc(skin) || '';
+      if (_sf.length>60000){ var _im=new Image();
+        _im.onload=function(){ try{ var q=64,c2=document.createElement('canvas');c2.width=q;c2.height=q;
+          c2.getContext('2d').drawImage(_im,0,0,q,q);
+          row.details.face=c2.toDataURL('image/jpeg',0.8);
+          try{ localStorage.setItem('mn_rank_test_v1', JSON.stringify(testRows())); }catch(e){}
+        }catch(e){} }; _im.src=_sf; }
+      else row.details.face=_sf; } catch(e){}
     pushTest(row);
     message('오프라인 테스트 랭킹을 등록했습니다. (서버 미전송 · Shift+클릭으로 삭제)');
     var m = el('rankModal');
