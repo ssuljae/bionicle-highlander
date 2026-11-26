@@ -4145,7 +4145,7 @@ requestAnimationFrame(frame);
       throw new Error(why === 'rate_limit' ? '연속 전송을 제한하고 있습니다. 3초 후 다시 시도하세요.' : why === 'tok' ? '세션이 만료되었습니다. 다시 로그인하세요.' :
         why === 'rate_limit' ? '기록 전송 간격이 너무 짧습니다. 3초 후 다시 시도하세요.' :
         why === 'implausible' || why === 'bad_score' || why === 'bad_details' ?
-          '기록 형식 또는 점수를 확인할 수 없습니다.' : '요청에 실패했습니다. 다시 시도하세요.');
+          '기록을 서버가 거부했습니다 (사유: ' + why + ', details ' + JSON.stringify(body && body.p_details ? Object.keys(body.p_details) : null) + ', face ' + ((body && body.p_details && body.p_details.face) ? body.p_details.face.length + 'B' : 'none') + ', skin=' + ((body && body.p_details) ? body.p_details.skin : '?') + ')' : '요청에 실패했습니다. 다시 시도하세요.');
     }
     return out;
   }
@@ -4275,7 +4275,17 @@ async function doSend() {
       if (!sameIdentity(s, identity())) throw new Error('계정이 변경되었습니다. 다시 전송하세요.');
       if (gen !== generation || !currentRun(raw.id)) return;
       try { var _fc = await faceCropForRun(raw); if (_fc) payload.p_details.face = await shrinkFaceAsync(_fc); } catch (e) {}
-      var res = await rpc('v11_submit_score', payload);
+      var res;
+      try { res = await rpc('v11_submit_score', payload); }
+      catch (e1) {
+        if (String(e1 && e1.message).indexOf('bad_details') >= 0 && payload.p_details && payload.p_details.face) {
+          var _nf = JSON.parse(JSON.stringify(payload)); delete _nf.p_details.face;
+          try { var _r2 = await rpc('v11_submit_score', _nf);
+            if (_r2 && (_r2.res ? _r2.res.ok : true)) { res = _r2; payload = _nf; toast('얼굴 이미지 없이 전송되었습니다 (이미지 용량 초과)'); }
+            else { throw e1; }
+          } catch (e2) { throw e1; }
+        } else { throw e1; }
+      }
       if (gen !== generation || !currentRun(raw.id) || !sameIdentity(s, identity())) return;
       sent = true;
       if (btn) { btn.disabled = true; btn.textContent = '전송 완료 · ' + res.rank + '위 (' + res.total + '명 중)'; }
